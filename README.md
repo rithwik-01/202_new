@@ -9,10 +9,6 @@ BookTableBuddy is designed to streamline the restaurant reservation process, off
 - **Restaurant Managers**: Manage restaurant profiles, tables, reservation schedules, and customer bookings
 - **Administrators**: Oversee the platform, approve restaurant registrations, and view system analytics
 
-## Team Titans
-
-Team Titans is a group of software engineers who developed this application as a project for a software engineering course.
-
 ## Features
 
 ### Customer Features
@@ -61,7 +57,7 @@ BookTableBuddy follows a modern client-server architecture with:
 - **Application Layer**: Django backend with RESTful API
 - **Data Layer**: PostgreSQL database
 
-Refer to the [Architecture Diagrams](./project_artifacts/Architecture-Diagrams.md) for detailed component and deployment diagrams.
+The component and deployment diagrams are available in the Diagrams directory.
 
 ## User Interface
 
@@ -73,8 +69,6 @@ The application features a clean, intuitive user interface designed for ease of 
 - Reservation booking interface
 - User dashboards (customer, restaurant, admin)
 - Authentication screens
-
-Refer to the [UI Wireframes](./project_artifacts/UI-Wireframes.md) for detailed screen designs.
 
 ## Installation and Setup
 
