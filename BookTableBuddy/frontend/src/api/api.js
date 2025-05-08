@@ -255,10 +255,18 @@ export const api = {
     update: (id, data) => setAuthHeader().put(`/api/bookings/${id}/`, data),
     cancelBooking: (id) => setAuthHeader().patch(`/api/bookings/cancel/${id}/`),
     completeBooking: (id) => setAuthHeader().patch(`/api/bookings/complete/${id}/`),
+    noShowBooking: (id) => setAuthHeader().patch(`/api/bookings/no-show/${id}/`),
     getRestaurantBookings: (restaurantId) =>
       setAuthHeader().get(`/api/bookings/restaurant/${restaurantId}/`),
     getTodayBookings: (restaurantId) => 
       setAuthHeader().get(`/api/bookings/today/${restaurantId ? `?restaurant_id=${restaurantId}` : ''}`),
+    getDateRangeBookings: (startDate, endDate, restaurantId) => {
+      let url = '/api/bookings/date-range/?';
+      if (startDate) url += `start_date=${startDate}&`;
+      if (endDate) url += `end_date=${endDate}&`;
+      if (restaurantId) url += `restaurant_id=${restaurantId}`;
+      return setAuthHeader().get(url);
+    },
   },
 
   // Admin endpoints

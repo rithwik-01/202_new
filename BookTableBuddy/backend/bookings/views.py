@@ -29,6 +29,10 @@ class IsBookingOwner(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         return request.user.is_authenticated and obj.user == request.user
 
+# Import our notification modules
+from .notifications import send_booking_confirmation
+from .sms_notifications import send_booking_confirmation_sms
+
 class BookingCreateView(generics.CreateAPIView):
     """
     API endpoint to create a new booking
@@ -45,9 +49,20 @@ class BookingCreateView(generics.CreateAPIView):
         response_serializer = BookingSerializer(booking)
         headers = self.get_success_headers(response_serializer.data)
         
-        # In a real app, we would send confirmation email or SMS here
-        # self.send_confirmation_email(booking)
-        # self.send_confirmation_sms(booking)
+        # Send confirmation email using our notifications module
+        try:
+            send_booking_confirmation(booking)
+            print(f"Confirmation email sent for booking {booking.id}")
+        except Exception as e:
+            print(f"Error sending confirmation email: {str(e)}")
+            
+        # Send confirmation SMS if phone number is available
+        if hasattr(booking, 'contact_phone') and booking.contact_phone:
+            try:
+                send_booking_confirmation_sms(booking)
+                print(f"Confirmation SMS sent for booking {booking.id}")
+            except Exception as e:
+                print(f"Error sending confirmation SMS: {str(e)}")
         
         return Response(
             response_serializer.data, 
@@ -251,3 +266,113 @@ class CompleteBookingView(APIView):
              "booking": BookingSerializer(booking).data},
             status=status.HTTP_200_OK
         )
+
+
+class NoShowBookingView(APIView):
+    """
+    API endpoint to mark a booking as no-show (for restaurant managers)
+    """
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def patch(self, request, pk):
+        booking = get_object_or_404(Booking, id=pk)
+        
+        # Check if the user is the restaurant manager for this booking
+        user = request.user
+        if user.role != User.RESTAURANT_MANAGER or booking.table.restaurant.manager != user:
+            return Response(
+                {"error": "You are not authorized to mark this booking as no-show."},
+                status=status.HTTP_403_FORBIDDEN
+            )
+        
+        # Only confirmed bookings can be marked as no-show
+        if booking.status != 'confirmed':
+            return Response(
+                {"error": f"Cannot mark booking as no-show. Current status: {booking.get_status_display()}."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        # Update status to no-show
+        booking.status = 'no_show'
+        booking.save()
+        
+        return Response(
+            {"success": "Booking has been marked as no-show.",
+             "booking": BookingSerializer(booking).data},
+            status=status.HTTP_200_OK
+        )
+
+
+class DateRangeBookingsView(generics.ListAPIView):
+    """
+    API endpoint to list bookings for a date range (for restaurant managers and admins)
+    """
+    serializer_class = BookingSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def get_queryset(self):
+        user = self.request.user
+        
+        # Get query parameters
+        start_date = self.request.query_params.get('start_date')
+        end_date = self.request.query_params.get('end_date')
+        restaurant_id = self.request.query_params.get('restaurant_id')
+        
+        # Validate dates
+        try:
+            if start_date:
+                start_date = timezone.datetime.strptime(start_date, '%Y-%m-%d').date()
+            else:
+                # Default to today if not provided
+                start_date = timezone.now().date()
+                
+            if end_date:
+                end_date = timezone.datetime.strptime(end_date, '%Y-%m-%d').date()
+            else:
+                # Default to 30 days from start_date if not provided
+                end_date = start_date + timezone.timedelta(days=30)
+                
+        except ValueError:
+            # Return empty queryset if dates are invalid
+            return Booking.objects.none()
+        
+        # Handle different user roles
+        if user.role == User.ADMIN:
+            # Admins can see all bookings, with optional restaurant filter
+            queryset = Booking.objects.filter(date__gte=start_date, date__lte=end_date)
+            if restaurant_id:
+                queryset = queryset.filter(table__restaurant_id=restaurant_id)
+            return queryset
+        
+        elif user.role == User.RESTAURANT_MANAGER:
+            # Get approved restaurants for this manager
+            from restaurants.models import Restaurant
+            approved_restaurant_ids = Restaurant.objects.filter(
+                manager=user,
+                approval_status='approved'
+            ).values_list('id', flat=True)
+            
+            # Filter bookings by date range and manager's restaurants
+            base_query = Booking.objects.filter(
+                date__gte=start_date,
+                date__lte=end_date,
+                table__restaurant__manager=user,
+                table__restaurant_id__in=approved_restaurant_ids
+            )
+            
+            # If a specific restaurant ID is requested, filter by it
+            if restaurant_id:
+                return base_query.filter(table__restaurant_id=restaurant_id)
+            return base_query
+        
+        else:
+            # Regular customers can only see their own bookings
+            queryset = Booking.objects.filter(
+                date__gte=start_date,
+                date__lte=end_date,
+                user=user,
+                table__restaurant__approval_status='approved'
+            )
+            if restaurant_id:
+                queryset = queryset.filter(table__restaurant_id=restaurant_id)
+            return queryset

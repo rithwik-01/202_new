@@ -6,7 +6,9 @@ from .views import (
     RestaurantBookingsView,
     CancelBookingView,
     TodayBookingsView,
-    CompleteBookingView
+    CompleteBookingView,
+    NoShowBookingView,
+    DateRangeBookingsView
 )
 
 urlpatterns = [
@@ -16,5 +18,7 @@ urlpatterns = [
     path('restaurant/<int:restaurant_id>/', RestaurantBookingsView.as_view(), name='restaurant-bookings'),
     path('cancel/<int:pk>/', CancelBookingView.as_view(), name='cancel-booking'),
     path('complete/<int:pk>/', CompleteBookingView.as_view(), name='complete-booking'),
+    path('no-show/<int:pk>/', NoShowBookingView.as_view(), name='no-show-booking'),
     path('today/', TodayBookingsView.as_view(), name='today-bookings'),
+    path('date-range/', DateRangeBookingsView.as_view(), name='date-range-bookings'),
 ]

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../../api/api';
 import { useAuth } from '../../contexts/AuthContext';
+import Calendar from '../../components/restaurant/Calendar';
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -105,7 +106,7 @@ const Dashboard = () => {
             cancelled_bookings = 0, 
             no_show_bookings = 0,
             total_tables = 0, 
-            average_rating = 0,
+            avg_rating = 0, // Changed from average_rating to match API response
             bookings_by_day = [],
             daily_bookings = []
           } = analyticsResponse.data || {};
@@ -117,7 +118,7 @@ const Dashboard = () => {
             cancelledBookings: cancelled_bookings,
             noShowBookings: no_show_bookings,
             totalTables: total_tables,
-            averageRating: average_rating,
+            averageRating: avg_rating, // Updated to use avg_rating from API response
             bookingsByDay: bookings_by_day,
             dailyBookings: daily_bookings,
             isApproved: true
@@ -190,6 +191,34 @@ const Dashboard = () => {
       const analyticsResponse = await api.analytics.getRestaurantAnalytics(selectedRestaurantId);
       console.log('Updated analytics after completion:', analyticsResponse.data);
       
+    } catch (err) {
+      console.error('Error marking booking as completed:', err);
+      alert('Failed to mark booking as completed. Please try again.');
+    }
+  };
+  
+  // Handle booking no-show
+  const handleMarkAsNoShow = async (bookingId) => {
+    try {
+      const response = await api.bookings.noShowBooking(bookingId);
+      
+      // Update the booking status in the local state
+      const updatedBookings = todayBookings.map(booking => {
+        if (booking.id === bookingId) {
+          return { ...booking, status: 'no_show' };
+        }
+        return booking;
+      });
+      
+      setTodayBookings(updatedBookings);
+      
+      // Show success message
+      alert('Booking marked as no-show successfully!');
+      
+      // Fully refresh all analytics data
+      const analyticsResponse = await api.analytics.getRestaurantAnalytics(selectedRestaurantId);
+      console.log('Updated analytics after no-show:', analyticsResponse.data);
+      
       // Extract all the data including detailed analytics
       const { 
         total_bookings = 0, 
@@ -198,7 +227,7 @@ const Dashboard = () => {
         cancelled_bookings = 0, 
         no_show_bookings = 0,
         total_tables = 0, 
-        average_rating = 0,
+        avg_rating = 0, // Changed from average_rating to match API response
         bookings_by_day = [],
         daily_bookings = []
       } = analyticsResponse.data || {};
@@ -211,7 +240,7 @@ const Dashboard = () => {
         cancelledBookings: cancelled_bookings,
         noShowBookings: no_show_bookings,
         totalTables: total_tables,
-        averageRating: average_rating,
+        averageRating: avg_rating, // Updated to use avg_rating
         bookingsByDay: bookings_by_day,
         dailyBookings: daily_bookings
       });
@@ -274,7 +303,7 @@ const Dashboard = () => {
         cancelled_bookings = 0, 
         no_show_bookings = 0,
         total_tables = 0, 
-        average_rating = 0,
+        avg_rating = 0, // Changed from average_rating to avg_rating to match API response
         bookings_by_day = [],
         daily_bookings = []
       } = analyticsResponse.data || {};
@@ -287,7 +316,7 @@ const Dashboard = () => {
         cancelledBookings: cancelled_bookings,
         noShowBookings: no_show_bookings,
         totalTables: total_tables,
-        averageRating: average_rating,
+        averageRating: avg_rating, // Updated to use correctly extracted avg_rating
         bookingsByDay: bookings_by_day,
         dailyBookings: daily_bookings
       });
@@ -420,10 +449,10 @@ const Dashboard = () => {
         <div className="bg-white rounded-lg shadow-md p-6">
           <h3 className="text-gray-500 text-sm font-medium mb-2">AVERAGE RATING</h3>
           <div className="flex items-center">
-            <div className="text-3xl font-bold">{stats.averageRating.toFixed(1)}</div>
+            <div className="text-3xl font-bold">{(stats.averageRating || 0).toFixed(1)}</div>
             <div className="text-yellow-500 ml-2">
-              {'★'.repeat(Math.round(stats.averageRating))}
-              {'☆'.repeat(5 - Math.round(stats.averageRating))}
+              {'★'.repeat(Math.round(stats.averageRating || 0))}
+              {'☆'.repeat(5 - Math.round(stats.averageRating || 0))}
             </div>
             <div className="ml-auto bg-yellow-100 p-2 rounded-full">
               <svg className="w-6 h-6 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
@@ -514,14 +543,25 @@ const Dashboard = () => {
                     </td>
                     <td className="px-4 py-3 whitespace-nowrap text-right text-sm font-medium">
                       {booking.status === 'confirmed' ? (
-                        <button
-                          onClick={() => handleMarkAsCompleted(booking.id)}
-                          className="text-indigo-600 hover:text-indigo-900 mr-3"
-                        >
-                          Mark Completed
-                        </button>
+                        <>
+                          <button
+                            onClick={() => handleMarkAsCompleted(booking.id)}
+                            className="text-green-600 hover:text-green-800 mr-3"
+                          >
+                            Mark Completed
+                          </button>
+                          <button
+                            onClick={() => handleMarkAsNoShow(booking.id)}
+                            className="text-red-600 hover:text-red-800"
+                          >
+                            Mark No-Show
+                          </button>
+                        </>
                       ) : (
-                        <span className="text-gray-400">{booking.status === 'completed' ? 'Completed' : 'Not Active'}</span>
+                        <span className="text-gray-400">
+                          {booking.status === 'completed' ? 'Completed' : 
+                           booking.status === 'no_show' ? 'No-Show' : 'Not Active'}
+                        </span>
                       )}
                     </td>
                   </tr>
@@ -531,6 +571,11 @@ const Dashboard = () => {
           </div>
         )}
       </div>
+      
+      {/* Calendar View for All Bookings */}
+      {selectedRestaurantId && (
+        <Calendar restaurantId={selectedRestaurantId} />
+      )}
       
       {/* Detailed Analytics Section */}
       <div id="detailed-analytics" className="bg-white rounded-lg shadow-md p-6 mt-6">
@@ -561,24 +606,29 @@ const Dashboard = () => {
                   <div className="min-w-max">
                     <div className="flex h-60">
                       {Array.isArray(stats.dailyBookings) && stats.dailyBookings
-                        .slice()
-                        .reverse()
+                        // Don't reverse the array, display from oldest to newest date (left to right)
                         .filter(day => day && typeof day.count !== 'undefined')
                         .map((day, index) => {
-                          // Format date safely
+                          // Format date safely - fixing timezone issues by using proper parsing
                           let dateStr = '';
                           try {
                             if (day.date) {
-                              dateStr = new Date(day.date).toLocaleDateString(undefined, { month: 'numeric', day: 'numeric' });
-                            } else {
-                              // Fallback to index based date if date is missing
-                              const today = new Date();
-                              const pastDate = new Date(today);
-                              pastDate.setDate(today.getDate() - index);
-                              dateStr = pastDate.toLocaleDateString(undefined, { month: 'numeric', day: 'numeric' });
+                              // Parse the date string with explicit parts to avoid timezone issues
+                              const parts = day.date.split('-');
+                              if (parts.length === 3) {
+                                const year = parseInt(parts[0]);
+                                const month = parseInt(parts[1]) - 1; // Month is 0-indexed in JS Date
+                                const dayNum = parseInt(parts[2]);
+                                
+                                // Create date at UTC time to avoid timezone shifts
+                                const dateObj = new Date(Date.UTC(year, month, dayNum));
+                                dateStr = `${month+1}/${dayNum}`;
+                              } else {
+                                dateStr = day.date;
+                              }
                             }
                           } catch (e) {
-                            // Final fallback if date parsing fails
+                            console.error('Error formatting date:', e);
                             dateStr = `Day ${index}`;
                           }
                           
@@ -603,54 +653,8 @@ const Dashboard = () => {
           </div>
         </div>
         
-        <div className="mb-8">
-          <h3 className="text-lg font-medium mb-4">Bookings by Day of Week</h3>
-          <div className="bg-gray-50 p-4 rounded-lg">
-            {stats.bookingsByDay && Array.isArray(stats.bookingsByDay) && stats.bookingsByDay.length > 0 ? (
-              <div className="flex justify-between h-64">
-                {stats.bookingsByDay.map((day, index) => {
-                  // Skip rendering if we don't have the expected data structure
-                  if (!day || typeof day.count === 'undefined') return null;
-                  
-                  // Calculate the max value safely
-                  const maxCount = Math.max(...stats.bookingsByDay
-                    .filter(d => d && typeof d.count !== 'undefined')
-                    .map(d => d.count));
-                  
-                  // Calculate height safely
-                  const barHeight = maxCount > 0 
-                    ? Math.max((day.count / maxCount) * 80, 1) 
-                    : 1;
-                  
-                  // Format day name safely
-                  let dayName = '';
-                  if (day.day) {
-                    dayName = typeof day.day === 'string' 
-                      ? day.day.substring(0, 3) 
-                      : String(day.day).substring(0, 3);
-                  } else {
-                    // Fallback labels if day.day is missing
-                    const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-                    dayName = dayNames[index % 7];
-                  }
-                  
-                  return (
-                    <div key={index} className="flex flex-col justify-end items-center mx-1 flex-1">
-                      <div className="text-xs text-center mb-1">{day.count || 0}</div>
-                      <div 
-                        className="w-full bg-indigo-500 rounded-sm" 
-                        style={{ height: `${barHeight}%` }}
-                      ></div>
-                      <div className="text-xs text-gray-500 mt-1">{dayName}</div>
-                    </div>
-                  );
-                })}
-              </div>
-            ) : (
-              <p className="text-gray-500 text-center py-10">No day-of-week data available.</p>
-            )}
-          </div>
-        </div>
+        {/* Bookings by Day of Week chart removed as requested */}
+
         
         <div>
           <h3 className="text-lg font-medium mb-4">Completion Rate by Time Period</h3>

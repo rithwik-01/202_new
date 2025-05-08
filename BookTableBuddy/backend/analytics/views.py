@@ -132,18 +132,22 @@ class RestaurantAnalyticsView(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
         
-        # Get last month bookings
+        # Get all bookings for lifetime total
+        all_bookings = Booking.objects.filter(table__restaurant=restaurant)
+        total_bookings = all_bookings.count()  # Lifetime total of all bookings
+        
+        # Get last month's bookings for detailed analytics
         today = timezone.now().date()
         last_month = today - relativedelta(months=1)
         
-        # Bookings for this restaurant
+        # Last month's bookings for this restaurant
         bookings = Booking.objects.filter(
             table__restaurant=restaurant,
             date__gte=last_month,
             date__lte=today
         )
         
-        total_bookings = bookings.count()
+        # Last month's booking counts by status
         confirmed_bookings = bookings.filter(status='confirmed').count()
         cancelled_bookings = bookings.filter(status='cancelled').count()
         completed_bookings = bookings.filter(status='completed').count()
@@ -188,6 +192,10 @@ class RestaurantAnalyticsView(APIView):
         total_reviews = reviews.count()
         avg_rating = reviews.aggregate(avg=Avg('rating'))['avg'] or 0
         
+        # Get total number of tables for the restaurant
+        from restaurants.models import Table
+        total_tables = Table.objects.filter(restaurant=restaurant).count()
+        
         # Ratings distribution
         ratings_distribution = {
             '1': reviews.filter(rating=1).count(),
@@ -209,7 +217,8 @@ class RestaurantAnalyticsView(APIView):
             'daily_bookings': daily_bookings,
             'total_reviews': total_reviews,
             'avg_rating': avg_rating,
-            'ratings_distribution': ratings_distribution
+            'ratings_distribution': ratings_distribution,
+            'total_tables': total_tables
         }
         
         return Response(data)
@@ -232,7 +241,12 @@ class SystemStatsView(APIView):
         pending_restaurants = Restaurant.objects.filter(approval_status='pending').count()
         rejected_restaurants = Restaurant.objects.filter(approval_status='rejected').count()
         
+        # Booking counts by status
         total_bookings = Booking.objects.count()
+        confirmed_bookings = Booking.objects.filter(status='confirmed').count()
+        completed_bookings = Booking.objects.filter(status='completed').count()
+        cancelled_bookings = Booking.objects.filter(status='cancelled').count()
+        no_show_bookings = Booking.objects.filter(status='no_show').count()
         total_reviews = Review.objects.count()
         
         # New registrations in the last month
@@ -263,6 +277,10 @@ class SystemStatsView(APIView):
             },
             'bookings': {
                 'total': total_bookings,
+                'confirmed': confirmed_bookings,
+                'completed': completed_bookings,
+                'cancelled': cancelled_bookings,
+                'no_show': no_show_bookings,
                 'last_month': bookings_last_month
             },
             'reviews': {
