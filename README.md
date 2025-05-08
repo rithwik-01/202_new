@@ -1,3 +1,11 @@
+Team Titans
+
+Members:
+- Pooja Sindham
+- Divyasri Lakshmi Alekhya Nakka
+- Viswa Kumar Suvvada
+- Teja Mareddy
+
 # BookTableBuddy
 
 BookTableBuddy is a comprehensive restaurant table booking application that connects diners with restaurants, providing an easy-to-use platform for making, managing, and tracking reservations.
