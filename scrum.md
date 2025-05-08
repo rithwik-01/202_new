@@ -1,6 +1,6 @@
 # Weekly Scrum Reports
 Scrum Sheet
-https://docs.google.com/spreadsheets/d/1c3bt6qtpOWj_Gi9XjdqmYoEpPmiYHM5VEkhJqwX61Z8/edit?gid=88307153#gid=88307153
+https://docs.google.com/spreadsheets/d/1c3bt6qtpOWj_Gi9XjdqmYoEpPmiYHM5VEkhJqwX61Z8/edit?usp=sharing 
 
 ## Sprint 1: March 5 - March 19, 2025
 

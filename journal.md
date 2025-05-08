@@ -49,7 +49,7 @@ BookTableBuddy is a comprehensive restaurant reservation platform that connects 
 
 ### Major Decisions
 
-1. **Booking Workflow**: We designed a booking workflow with statuses (pending, confirmed, canceled, rejected, completed) and established rules for transitions between states.
+1. **Booking Workflow**: We designed a booking workflow with statuses (pconfirmed, canceled, completed) and established rules for transitions between states.
 
 2. **UI Design System**: Decided to use Material-UI for consistent design language across the application.
 
@@ -63,20 +63,11 @@ BookTableBuddy is a comprehensive restaurant reservation platform that connects 
 - Set up database in cloud environment
 
 ### Challenges
-
-- Handling time zones for bookings
 - Managing file uploads and storage
 - Implementing proper validation for booking requests
 
 ## Sprint 3: Enhanced Features (April 3 - April 16, 2025)
 
-### Major Decisions
-
-1. **Review System**: Designed a review system allowing customers to rate and comment on restaurants after their visit.
-
-2. **Favorites Functionality**: Implemented a way for users to mark restaurants as favorites for quick access.
-
-3. **Admin Dashboard**: Created a comprehensive admin dashboard for system management.
 
 ### Achievements
 
@@ -96,7 +87,7 @@ BookTableBuddy is a comprehensive restaurant reservation platform that connects 
 
 ### Major Decisions
 
-1. **Notification Strategy**: Implemented both email and SMS notifications for booking confirmations and reminders.
+1. **Notification Strategy**: Implemented  email for booking confirmations.
 
 2. **Deployment Configuration**: Decided on Nginx as a reverse proxy with Gunicorn as the WSGI server for the Django application.
 
@@ -104,11 +95,10 @@ BookTableBuddy is a comprehensive restaurant reservation platform that connects 
 
 ### Achievements
 
-- Implemented notification system (email and SMS)
+- Implemented notification system (email)
 - Optimized UI for mobile devices
 - Created statistics dashboards
 - Successfully deployed application to production
-- Implemented security measures (HTTPS, secure headers)
 
 ### Challenges
 

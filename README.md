@@ -121,7 +121,6 @@ The application exposes several RESTful API endpoints for:
 - Reviews
 - Analytics
 
-A detailed API collection is available in the `BookTable_API_Collection.json` file, which can be imported into Postman.
 
 ## Design Decisions
 
@@ -141,31 +140,6 @@ A detailed API collection is available in the `BookTable_API_Collection.json` fi
 ### Security Considerations
 - Password hashing and secure credential storage
 - Data validation on both client and server sides
-- HTTPS for all communications
 
-## Development Workflow
 
-This project follows a feature-based development workflow:
-1. Feature branches created from the `development` branch
-2. Pull requests with code review before merging
-3. CI/CD pipeline for automated testing
-4. Staging environment for pre-production testing
-5. Production deployment after QA approval
 
-## Future Enhancements
-
-Planned future enhancements include:
-- Mobile app versions (iOS/Android)
-- Integration with payment processing for premium features
-- Waitlist management for fully booked restaurants
-- AI-powered restaurant recommendations
-- Integration with third-party dining rewards programs
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Acknowledgements
-
-- Django and React.js communities for their excellent documentation
-- Team members for their dedication and contributions
