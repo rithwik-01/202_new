@@ -31,7 +31,7 @@ class IsBookingOwner(permissions.BasePermission):
 
 # Import our notification modules
 from .notifications import send_booking_confirmation
-from .sms_notifications import send_booking_confirmation_sms
+# SMS notifications removed as requested
 
 class BookingCreateView(generics.CreateAPIView):
     """
@@ -56,13 +56,7 @@ class BookingCreateView(generics.CreateAPIView):
         except Exception as e:
             print(f"Error sending confirmation email: {str(e)}")
             
-        # Send confirmation SMS if phone number is available
-        if hasattr(booking, 'contact_phone') and booking.contact_phone:
-            try:
-                send_booking_confirmation_sms(booking)
-                print(f"Confirmation SMS sent for booking {booking.id}")
-            except Exception as e:
-                print(f"Error sending confirmation SMS: {str(e)}")
+        # SMS functionality removed as requested
         
         return Response(
             response_serializer.data, 
@@ -80,6 +74,12 @@ class UserBookingsListView(generics.ListAPIView):
     def get_queryset(self):
         return Booking.objects.filter(user=self.request.user)
 
+class IsBookingOwnerOrRestaurantManager(permissions.BasePermission):
+    def has_object_permission(self, request, view, obj):
+        owner_check = IsBookingOwner().has_object_permission(request, view, obj)
+        manager_check = IsRestaurantManagerForBooking().has_object_permission(request, view, obj)
+        return owner_check or manager_check
+
 class BookingDetailView(generics.RetrieveUpdateDestroyAPIView):
     """
     API endpoint to retrieve, update or cancel a booking
@@ -87,11 +87,12 @@ class BookingDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = BookingSerializer
     
     def get_permissions(self):
+        print(f"Request method: {self.request.method}")
         if self.request.method in ['PUT', 'PATCH', 'DELETE']:
             self.permission_classes = [permissions.IsAuthenticated, IsBookingOwner]
         else:
-            self.permission_classes = [permissions.IsAuthenticated, 
-                                      permissions.OR(IsBookingOwner, IsRestaurantManagerForBooking)]
+            self.permission_classes = [permissions.IsAuthenticated, IsBookingOwnerOrRestaurantManager]
+        print(f"Permission classes: {self.permission_classes}")
         return super().get_permissions()
     
     def get_queryset(self):

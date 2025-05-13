@@ -237,13 +237,30 @@ class RestaurantDetailSerializer(serializers.ModelSerializer):
             for table_data in tables_data:
                 Table.objects.create(restaurant=instance, **table_data)
         
-        # Update photos if provided
+        # Update photos if provided - improved handling for different formats
         if photos_data is not None:
-            # Only process photos with actual file uploads
-            for photo_data in photos_data:
-                if 'image' in photo_data and hasattr(photo_data['image'], 'file'):
-                    # Create a new photo with the uploaded file
+            # Skip photos processing if it's just an object reference or empty list
+            # This handles the case where frontend sends the photos as objects instead of files
+            print(f"Photos data received: {type(photos_data)}, content: {photos_data}")
+            
+            # Only process if photos_data is a list containing actual file uploads
+            if isinstance(photos_data, list):
+                valid_photos = []
+                for photo_data in photos_data:
+                    # Handle the case where image is a dict (object) instead of a file
+                    if 'image' in photo_data:
+                        if hasattr(photo_data['image'], 'file') or hasattr(photo_data['image'], 'read'):
+                            valid_photos.append(photo_data)
+                        else:
+                            print(f"Skipping invalid photo format: {type(photo_data['image'])}")
+                    else:
+                        print("Skipping photo data without 'image' field")
+                        
+                # Process only the valid photos
+                for photo_data in valid_photos:
                     RestaurantPhoto.objects.create(restaurant=instance, **photo_data)
+            else:
+                print(f"Photos data is not a list, skipping photo processing")
                     
         # Check for direct photo upload fields
         request = self.context.get('request')

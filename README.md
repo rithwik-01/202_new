@@ -104,7 +104,7 @@ cd BookTableBuddy/backend
 
 # Install Python dependencies
 pip install -r requirements.txt
-
+.\venv\Scripts\activate
 # Run migrations
 python manage.py migrate
 

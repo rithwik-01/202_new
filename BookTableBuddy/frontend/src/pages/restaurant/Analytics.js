@@ -383,15 +383,27 @@ const Analytics = () => {
           </div>
           
           <div className="p-6">
-            {bookings_by_day && Object.keys(bookings_by_day).length > 0 ? (
+            {bookings_by_day && typeof bookings_by_day === 'object' && Object.keys(bookings_by_day).length > 0 ? (
               <div className="space-y-4">
-                {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((day, index) => {
-                  const count = bookings_by_day[index] || 0;
-                  const maxCount = Math.max(...Object.values(bookings_by_day));
+                {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((dayName, index) => {
+                  // Safely extract count, ensuring we're not directly rendering an object
+                  let count = 0;
+                  if (typeof bookings_by_day[index] === 'number') {
+                    count = bookings_by_day[index];
+                  } else if (bookings_by_day[index] && typeof bookings_by_day[index].count === 'number') {
+                    count = bookings_by_day[index].count;
+                  }
+                  
+                  // Safely calculate max count
+                  const values = Object.values(bookings_by_day).map(value => {
+                    return typeof value === 'number' ? value : 
+                           (value && typeof value.count === 'number' ? value.count : 0);
+                  });
+                  const maxCount = values.length > 0 ? Math.max(...values) : 0;
                   
                   return (
-                    <div key={day} className="flex items-center">
-                      <span className="w-32">{day}</span>
+                    <div key={dayName} className="flex items-center">
+                      <span className="w-32">{dayName}</span>
                       <div className="flex-1 bg-gray-200 rounded-full h-4 mx-4">
                         <div 
                           className="bg-blue-500 h-4 rounded-full"

@@ -260,6 +260,14 @@ class SystemStatsView(APIView):
         # Bookings in the last month
         bookings_last_month = Booking.objects.filter(date__gte=last_month).count()
         
+        # Calculate estimated revenue based on bookings and average party size
+        # Note: This is just an estimated value for displaying in the dashboard
+        avg_party_size = Booking.objects.aggregate(avg=Avg('party_size'))['avg'] or 0
+        # Assume average spend per person (e.g., $25 per person)
+        avg_spend_per_person = 25.0
+        # Only consider completed bookings for revenue estimation
+        revenue_estimate = completed_bookings * avg_party_size * avg_spend_per_person
+        
         data = {
             'users': {
                 'total': total_users,
@@ -285,7 +293,9 @@ class SystemStatsView(APIView):
             },
             'reviews': {
                 'total': total_reviews
-            }
+            },
+            'revenue_estimate': revenue_estimate,
+            'average_party_size': avg_party_size
         }
         
         return Response(data)

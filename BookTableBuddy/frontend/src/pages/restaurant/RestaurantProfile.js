@@ -544,15 +544,10 @@ const RestaurantProfile = () => {
         // We'll handle photos differently - we'll use the standard DRF fields for existing photos
         // and then handle file uploads separately after the initial update
         
-        // First, just add existing photos by ID (with no changes to them)
-        let photoIndex = 0;
-        const existingPhotos = formData.photos.filter(p => p.id && !p.file);
-        existingPhotos.forEach((photo) => {
-          restaurantFormData.append(`photos[${photoIndex}][id]`, photo.id);
-          restaurantFormData.append(`photos[${photoIndex}][caption]`, photo.caption || 'Restaurant Photo');
-          restaurantFormData.append(`photos[${photoIndex}][is_primary]`, photo.is_primary ? 'true' : 'false');
-          photoIndex++;
-        });
+        // We won't include existing photos in the update request to avoid [object Object] validation errors
+        // The existing photos will remain unchanged in the database
+        // We'll only handle new photo uploads separately
+        console.log('Skipping existing photos in main update request to avoid validation errors');
         
         // Log the FormData contents for debugging before sending
         console.log('FormData entries:');
