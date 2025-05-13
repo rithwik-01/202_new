@@ -11,12 +11,12 @@ def test_sms():
     print("-" * 50)
     
     # These are the Twilio credentials
-    account_sid = 'ACe8c69d5e853f09477c951409f0ea866f'
-    auth_token = 'dfeac1e5851f68afee715a9dc3667946'
+    account_sid = 'TWILIO_ACCOUNT_SID_PLACEHOLDER'
+    auth_token = 'TWILIO_AUTH_TOKEN_PLACEHOLDER'
     
     # Use a valid phone number format (+1XXXXXXXXXX)
-    to_number = '+16692927868'  # The number you're sending to
-    from_number = '+18446434380'  # Your Twilio number
+    to_number = '+15555555555'  # The number you're sending to
+    from_number = '+15555555555'  # Your Twilio number
     
     print(f"From: {from_number}")
     print(f"To: {to_number}")

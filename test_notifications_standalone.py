@@ -103,9 +103,9 @@ def test_sms_notification():
     print("-" * 40)
     
     # Twilio settings
-    account_sid = os.environ.get('TWILIO_ACCOUNT_SID', 'ACe8c69d5e853f09477c951409f0ea866f')
-    auth_token = os.environ.get('TWILIO_AUTH_TOKEN', 'dfeac1e5851f68afee715a9dc3667946')
-    from_number = os.environ.get('TWILIO_PHONE_NUMBER', '+18446434380')
+    account_sid = os.environ.get('TWILIO_ACCOUNT_SID', 'TWILIO_ACCOUNT_SID_PLACEHOLDER')
+    auth_token = os.environ.get('TWILIO_AUTH_TOKEN', 'TWILIO_AUTH_TOKEN_PLACEHOLDER')
+    from_number = os.environ.get('TWILIO_PHONE_NUMBER', '+15555555555')
     to_number = input("Enter phone number for testing (with country code, e.g. +16692927868): ")
     
     print(f"Sending test SMS to: {to_number}")
