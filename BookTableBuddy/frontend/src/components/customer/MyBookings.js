@@ -80,7 +80,7 @@ const MyBookings = () => {
       case 'cancelled':
         return 'bg-red-100 text-red-800';
       case 'completed':
-        return 'bg-blue-100 text-blue-800';
+        return 'bg-primary/10 text-primary/80';
       case 'no_show':
         return 'bg-yellow-100 text-yellow-800';
       default:

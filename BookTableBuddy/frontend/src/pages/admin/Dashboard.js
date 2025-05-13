@@ -103,8 +103,8 @@ const Dashboard = () => {
               <p className="text-sm font-medium text-gray-500 uppercase">Total Users</p>
               <h3 className="text-3xl font-bold">{stats?.total_users || 0}</h3>
             </div>
-            <div className="bg-blue-100 p-2 rounded-full">
-              <svg className="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+            <div className="bg-primary/10 p-2 rounded-full">
+              <svg className="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
               </svg>
             </div>
@@ -182,8 +182,8 @@ const Dashboard = () => {
               to="/admin/restaurant-approvals" 
               className="flex flex-col items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition duration-300"
             >
-              <div className="bg-blue-100 p-3 rounded-full mb-3">
-                <svg className="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+              <div className="bg-primary/10 p-3 rounded-full mb-3">
+                <svg className="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
               </div>
@@ -241,7 +241,7 @@ const Dashboard = () => {
               <h2 className="text-xl font-semibold">Pending Restaurant Approvals</h2>
               <Link 
                 to="/admin/restaurant-approvals" 
-                className="text-blue-600 hover:text-blue-800 text-sm"
+                className="text-primary hover:text-primary/80 text-sm"
               >
                 View All
               </Link>
@@ -265,7 +265,7 @@ const Dashboard = () => {
                     <div className="flex space-x-2">
                       <Link 
                         to={`/admin/restaurant-approvals?id=${restaurant.id}`}
-                        className="inline-flex items-center px-3 py-1 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                        className="inline-flex items-center px-3 py-1 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-primary hover:bg-primary/80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                       >
                         Review
                       </Link>

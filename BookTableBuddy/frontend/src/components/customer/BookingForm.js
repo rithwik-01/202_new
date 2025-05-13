@@ -270,15 +270,15 @@ const BookingForm = () => {
           </button>
         </div>
         
-        <div className="bg-white shadow-md rounded-lg overflow-hidden">
+        <div className="bg-white shadow-soft rounded-xl overflow-hidden">
           <div className="p-6 border-b border-gray-200">
-            <h1 className="text-2xl font-bold text-gray-900">Complete Your Reservation</h1>
+            <h1 className="text-2xl font-display font-bold text-gray-900">Complete Your Reservation</h1>
             <p className="mt-2 text-gray-600">You're reserving a table at {restaurant.name}</p>
           </div>
           
           <div className="p-6">
-            <div className="mb-6 bg-gray-50 p-4 rounded-md">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">Reservation Details</h2>
+            <div className="mb-6 bg-gray-50 p-4 rounded-lg">
+              <h2 className="text-lg font-display font-semibold text-gray-900 mb-4">Reservation Details</h2>
               
               <div className="grid grid-cols-3 gap-4">
                 <div>

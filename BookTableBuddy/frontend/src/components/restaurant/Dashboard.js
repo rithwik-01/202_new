@@ -299,7 +299,7 @@ const Dashboard = () => {
                           </Link>
                           <Link 
                             to={`/restaurant/bookings/${restaurant.id}`}
-                            className="text-blue-600 hover:text-blue-900"
+                            className="text-primary hover:text-primary/90"
                           >
                             Bookings
                           </Link>

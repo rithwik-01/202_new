@@ -154,6 +154,9 @@ const RestaurantSearch = () => {
   
   // Format time for display
   const formatTime = (timeString) => {
+    if (!timeString || typeof timeString !== 'string') {
+      return '';
+    }
     const [hours, minutes] = timeString.split(':');
     const hour = parseInt(hours, 10);
     const ampm = hour >= 12 ? 'PM' : 'AM';
@@ -186,47 +189,62 @@ const RestaurantSearch = () => {
     });
   };
   
+  // Helper to get the primary photo URL for a restaurant
+  const getPrimaryPhotoUrl = (restaurant) => {
+    if (restaurant.primary_photo && restaurant.primary_photo.image_path) {
+      return `${process.env.REACT_APP_API_URL || ''}${restaurant.primary_photo.image_path}`;
+    }
+    if (restaurant.primary_photo && restaurant.primary_photo.image) {
+      return restaurant.primary_photo.image.startsWith('http')
+        ? restaurant.primary_photo.image
+        : `${process.env.REACT_APP_API_URL || ''}${restaurant.primary_photo.image}`;
+    }
+    if (restaurant.cover_image) return restaurant.cover_image;
+    if (restaurant.image_url) return restaurant.image_url.startsWith('http') ? restaurant.image_url : `${process.env.REACT_APP_API_URL || ''}${restaurant.image_url}`;
+    return '/placeholder-restaurant.jpg';
+  };
+  
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">Find a Table</h1>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <h1 className="text-4xl font-display font-bold text-gray-900 mb-8">Find Your Perfect Table</h1>
       
       {/* Search Form */}
-      <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-        <form onSubmit={handleSearch} className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
+      <div className="bg-white rounded-xl shadow-soft p-8 mb-12">
+        <form onSubmit={handleSearch} className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
           <div>
-            <label htmlFor="date" className="block text-sm font-medium text-gray-700 mb-1">Date</label>
+            <label htmlFor="date" className="block text-sm font-medium text-gray-700 mb-2">Date</label>
             <input
               type="date"
               id="date"
               name="date"
               value={searchParams.date}
               onChange={handleInputChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
               required
             />
           </div>
           
           <div>
-            <label htmlFor="time" className="block text-sm font-medium text-gray-700 mb-1">Time</label>
+            <label htmlFor="time" className="block text-sm font-medium text-gray-700 mb-2">Time</label>
             <input
               type="time"
               id="time"
               name="time"
               value={searchParams.time}
               onChange={handleInputChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
               required
             />
           </div>
           
           <div>
-            <label htmlFor="party_size" className="block text-sm font-medium text-gray-700 mb-1">Party Size</label>
+            <label htmlFor="party_size" className="block text-sm font-medium text-gray-700 mb-2">Party Size</label>
             <select
               id="party_size"
               name="party_size"
               value={searchParams.party_size}
               onChange={handleInputChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
             >
               {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(num => (
                 <option key={num} value={num}>{num} {num === 1 ? 'person' : 'people'}</option>
@@ -235,7 +253,7 @@ const RestaurantSearch = () => {
           </div>
           
           <div>
-            <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-1">Location</label>
+            <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-2">Location</label>
             <input
               type="text"
               id="location"
@@ -243,18 +261,18 @@ const RestaurantSearch = () => {
               value={searchParams.location}
               onChange={handleInputChange}
               placeholder="City, State or Zip"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
             />
           </div>
           
           <div>
-            <label htmlFor="cuisine" className="block text-sm font-medium text-gray-700 mb-1">Cuisine</label>
+            <label htmlFor="cuisine" className="block text-sm font-medium text-gray-700 mb-2">Cuisine</label>
             <select
               id="cuisine"
               name="cuisine"
               value={searchParams.cuisine}
               onChange={handleInputChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200"
             >
               <option value="">Any Cuisine</option>
               {cuisines.map(cuisine => (
@@ -263,13 +281,23 @@ const RestaurantSearch = () => {
             </select>
           </div>
           
-          <div className="md:col-span-3 lg:col-span-5 mt-4">
+          <div className="md:col-span-3 lg:col-span-5 mt-6">
             <button
               type="submit"
-              className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md transition duration-300"
+              className="w-full btn-primary py-3 text-lg font-medium"
               disabled={loading}
             >
-              {loading ? 'Searching...' : 'Find A Table'}
+              {loading ? (
+                <div className="flex items-center justify-center">
+                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Searching...
+                </div>
+              ) : (
+                'Find A Table'
+              )}
             </button>
           </div>
         </form>
@@ -277,119 +305,109 @@ const RestaurantSearch = () => {
       
       {/* Error Display */}
       {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6" role="alert">
-          <p>{error}</p>
+        <div className="bg-red-50 border-l-4 border-red-400 p-4 mb-8">
+          <div className="flex">
+            <div className="flex-shrink-0">
+              <svg className="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div className="ml-3">
+              <p className="text-sm text-red-700">{error}</p>
+            </div>
+          </div>
         </div>
       )}
       
       {/* Results Display */}
-      <div className="space-y-6">
-        <h2 className="text-2xl font-semibold mb-4">
+      <div className="space-y-8">
+        <h2 className="text-2xl font-display font-semibold text-gray-900">
           {restaurants.length > 0 
             ? `Available Restaurants (${restaurants.length})` 
             : 'Search for available restaurants'}
         </h2>
         
-        {restaurants.length > 0 ? (
+        {loading ? (
+          <div className="flex justify-center items-center py-12">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+          </div>
+        ) : restaurants.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {restaurants.map(restaurant => (
-              <div key={restaurant.id} className="bg-white rounded-lg shadow-md overflow-hidden">
-                {restaurant.primary_photo ? (
-                  <img 
-                    src={restaurant.primary_photo.image_path ? 
-                        `${process.env.REACT_APP_API_URL}${restaurant.primary_photo.image_path}` : 
-                        (restaurant.primary_photo.image || '')
-                    }
-                    alt={restaurant.primary_photo.caption || restaurant.name} 
-                    className="w-full h-48 object-cover"
-                    onError={(e) => {
-                      console.log('Image failed to load:', e.target.src);
-                      e.target.onerror = null;
-                      e.target.src = 'https://via.placeholder.com/300x200?text=No+Image+Available';
-                    }}
-                  />
-                ) : (
-                  <div className="w-full h-48 bg-gray-300 flex items-center justify-center">
-                    <span className="text-gray-500">No image available</span>
+            {restaurants.map(restaurant => {
+              console.log(restaurant); // Debug: log the restaurant object to inspect image fields
+              return (
+                <div key={restaurant.id} className="bg-white rounded-xl shadow-soft overflow-hidden">
+                  <div className="aspect-w-16 aspect-h-9">
+                    <img
+                      src={getPrimaryPhotoUrl(restaurant)}
+                      alt={restaurant.name}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
-                )}
-                
-                <div className="p-5">
-                  <h3 className="text-xl font-bold mb-2">{restaurant.name}</h3>
-                  
-                  <div className="flex items-center mb-2">
-                    <div className="text-yellow-500 mr-2">
-                      {'★'.repeat(Math.round(restaurant.average_rating))}
-                      {'☆'.repeat(5 - Math.round(restaurant.average_rating))}
+                  <div className="p-6">
+                    <h3 className="text-xl font-display font-semibold text-gray-900 mb-2">
+                      {restaurant.name}
+                    </h3>
+                    <p className="text-gray-600 mb-4">
+                      {(() => {
+                        if (!restaurant.cuisine) return '';
+                        if (Array.isArray(restaurant.cuisine)) {
+                          return restaurant.cuisine.map(c => c.name || '').filter(Boolean).join(', ');
+                        }
+                        if (typeof restaurant.cuisine === 'object' && restaurant.cuisine !== null) {
+                          return restaurant.cuisine.name || '';
+                        }
+                        return String(restaurant.cuisine);
+                      })()}
+                    </p>
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center">
+                        <span className="text-yellow-400">★</span>
+                        <span className="ml-1 text-gray-700">{restaurant.rating || 'New'}</span>
+                      </div>
+                      <span className="text-gray-600">{formatCost(restaurant.cost_rating)}</span>
                     </div>
-                    <span className="text-sm text-gray-500">
-                      ({restaurant.average_rating.toFixed(1)})
-                    </span>
-                  </div>
-                  
-                  <div className="flex flex-wrap gap-2 mb-2">
-                    {restaurant.cuisine.map(cuisine => (
-                      <span 
-                        key={cuisine.id} 
-                        className="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded"
-                      >
-                        {cuisine.name}
-                      </span>
-                    ))}
-                  </div>
-                  
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="text-gray-700">
-                      {formatCost(restaurant.cost_rating)}
-                    </span>
-                    <span className="text-gray-500 text-sm">
-                      {restaurant.bookings_today} booked today
-                    </span>
-                  </div>
-                  
-                  {/* Available Time Slots */}
-                  <div className="mb-4">
-                    <h4 className="text-sm font-medium text-gray-700 mb-2">Available Times:</h4>
-                                        {loadingTimeSlots[restaurant.id] ? (
-                      <div className="flex justify-center">
-                        <div className="spinner-border text-red-600" role="status">
-                          <span className="sr-only">Loading time slots...</span>
+                    <div className="space-y-2">
+                      {loadingTimeSlots[restaurant.id] ? (
+                        <div className="flex justify-center py-2">
+                          <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-primary-600"></div>
                         </div>
-                      </div>
-                    ) : restaurant.available_time_slots && restaurant.available_time_slots.length > 0 ? (
-                      <div className="flex flex-wrap gap-2">
-                        {restaurant.available_time_slots.map((slot, index) => (
-                          <button
-                            key={index}
-                            onClick={() => handleSelectTime(restaurant.id, slot.time)}
-                            className="bg-red-100 hover:bg-red-200 text-red-800 text-sm font-semibold py-1 px-3 rounded-full transition duration-300"
-                            title={`${slot.available_tables} ${slot.available_tables === 1 ? 'table' : 'tables'} available`}
-                          >
-                            {formatTime(slot.time)}
-                            <span className="ml-1 text-xs">({slot.available_tables})</span>
-                          </button>
-                        ))}
-                      </div>
-                    ) : (
-                      <p className="text-gray-500 text-sm">No available times found</p>
-                    )}
+                      ) : restaurantTimeSlots[restaurant.id]?.length > 0 ? (
+                        <div className="grid grid-cols-3 gap-2">
+                          {restaurantTimeSlots[restaurant.id].slice(0, 3).map((time, idx) => (
+                            <button
+                              key={typeof time === 'string' ? time : (time.time || idx)}
+                              onClick={() => handleSelectTime(restaurant.id, typeof time === 'string' ? time : time.time)}
+                              className="bg-blue-600 hover:bg-blue-700 focus:bg-blue-800 text-white text-sm font-semibold py-2 px-4 rounded-lg shadow transition-colors duration-200"
+                            >
+                              {formatTime(typeof time === 'string' ? time : time.time)}
+                            </button>
+                          ))}
+                          {restaurantTimeSlots[restaurant.id].length > 3 && (
+                            <button
+                              onClick={() => navigate(`/customer/restaurant/${restaurant.id}`)}
+                              className="btn-secondary text-sm py-1.5"
+                            >
+                              More times
+                            </button>
+                          )}
+                        </div>
+                      ) : (
+                        <p className="text-gray-500 text-sm text-center">No available times</p>
+                      )}
+                    </div>
                   </div>
-                  
-                  <Link 
-                    to={`/customer/restaurant/${restaurant.id}`}
-                    className="block w-full bg-red-600 hover:bg-red-700 text-white text-center font-bold py-2 px-4 rounded-md transition duration-300"
-                  >
-                    Restaurant Details
-                  </Link>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         ) : (
           !loading && (
-            <p className="text-gray-500">
-              No restaurants found. Try adjusting your search parameters.
-            </p>
+            <div className="text-center py-12">
+              <p className="text-gray-500 text-lg">
+                No restaurants found. Try adjusting your search parameters.
+              </p>
+            </div>
           )
         )}
       </div>

@@ -128,7 +128,7 @@ const BookingConfirmation = () => {
         <div className="text-center">
           <button 
             onClick={() => navigate(-1)}
-            className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition duration-300"
+            className="inline-block bg-primary hover:bg-primary/80 text-white font-bold py-2 px-4 rounded-md transition duration-300"
           >
             Go Back
           </button>
@@ -269,7 +269,7 @@ const BookingConfirmation = () => {
             <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
               <Link 
                 to="/customer/bookings" 
-                className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-md transition duration-300 text-center"
+                className="bg-primary hover:bg-primary/80 text-white font-medium py-2 px-6 rounded-md transition duration-300 text-center"
               >
                 View All My Bookings
               </Link>
@@ -325,7 +325,7 @@ const BookingConfirmation = () => {
                       name="contact_name"
                       value={formData.contact_name}
                       onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
                       required
                     />
                   </div>
@@ -340,7 +340,7 @@ const BookingConfirmation = () => {
                       name="contact_phone"
                       value={formData.contact_phone}
                       onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
                       required
                     />
                   </div>
@@ -355,7 +355,7 @@ const BookingConfirmation = () => {
                       name="contact_email"
                       value={formData.contact_email}
                       onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
                       required
                     />
                   </div>
@@ -372,7 +372,7 @@ const BookingConfirmation = () => {
                   value={formData.special_requests}
                   onChange={handleInputChange}
                   rows={4}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
                   placeholder="Let the restaurant know if you have any special dietary requirements or other requests."
                 />
               </div>

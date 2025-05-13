@@ -271,7 +271,7 @@ const Tables = () => {
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <button 
                               onClick={() => handleEditTable(table)}
-                              className="text-indigo-600 hover:text-indigo-900 mr-4"
+                              className="text-primary hover:text-primary/90 mr-4"
                             >
                               Edit
                             </button>
@@ -318,7 +318,7 @@ const Tables = () => {
                       name="table_number"
                       value={formData.table_number}
                       onChange={handleInputChange}
-                      className={`w-full px-3 py-2 border ${formErrors.table_number ? 'border-red-300' : 'border-gray-300'} rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500`}
+                      className={`w-full px-3 py-2 border ${formErrors.table_number ? 'border-red-300' : 'border-gray-300'} rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary`}
                       placeholder="e.g. Table 1, Window Table, etc."
                     />
                     {formErrors.table_number && (
@@ -338,7 +338,7 @@ const Tables = () => {
                       onChange={handleInputChange}
                       min="1"
                       max="20"
-                      className={`w-full px-3 py-2 border ${formErrors.capacity ? 'border-red-300' : 'border-gray-300'} rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500`}
+                      className={`w-full px-3 py-2 border ${formErrors.capacity ? 'border-red-300' : 'border-gray-300'} rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary`}
                     />
                     {formErrors.capacity && (
                       <p className="mt-1 text-sm text-red-600">{formErrors.capacity}</p>
@@ -378,9 +378,9 @@ const Tables = () => {
             </div>
           </div>
           
-          <div className="mt-6 bg-blue-50 rounded-lg p-4">
-            <h3 className="text-blue-800 font-medium mb-2">Table Management Tips</h3>
-            <ul className="text-sm text-blue-700 space-y-2">
+          <div className="mt-6 bg-primary/5 rounded-lg p-4">
+            <h3 className="text-primary/80 font-medium mb-2">Table Management Tips</h3>
+            <ul className="text-sm text-primary/70 space-y-2">
               <li>• Use clear table numbers or names that are easy to identify.</li>
               <li>• Set accurate seating capacity to ensure proper booking allocation.</li>
               <li>• Add tables for all available seating options (indoor, outdoor, etc).</li>

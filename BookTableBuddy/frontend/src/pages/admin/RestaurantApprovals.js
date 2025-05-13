@@ -157,7 +157,7 @@ const RestaurantApprovals = () => {
       <div className="mb-6">
         <Link 
           to="/admin/dashboard" 
-          className="inline-flex items-center text-blue-600 hover:text-blue-800"
+          className="inline-flex items-center text-primary hover:text-primary/80"
         >
           <svg className="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 20 20">
             <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -208,7 +208,7 @@ const RestaurantApprovals = () => {
                   <div 
                     key={restaurant.id} 
                     className={`p-4 cursor-pointer hover:bg-gray-50 ${
-                      selectedRestaurant?.id === restaurant.id ? 'bg-blue-50' : ''
+                      selectedRestaurant?.id === restaurant.id ? 'bg-primary/5' : ''
                     }`}
                     onClick={() => loadRestaurantDetails(restaurant.id)}
                   >
@@ -242,7 +242,7 @@ const RestaurantApprovals = () => {
           {detailLoading ? (
             <div className="bg-white rounded-lg shadow-md p-6 flex justify-center">
               <div className="text-center">
-                <div className="spinner-border text-blue-600" role="status">
+                <div className="spinner-border text-primary" role="status">
                   <span className="sr-only">Loading...</span>
                 </div>
                 <p className="mt-2">Loading restaurant details...</p>
@@ -325,7 +325,7 @@ const RestaurantApprovals = () => {
                               href={selectedRestaurant.website} 
                               target="_blank" 
                               rel="noopener noreferrer" 
-                              className="text-blue-600 hover:underline"
+                              className="text-primary hover:underline"
                             >
                               {selectedRestaurant.website}
                             </a>

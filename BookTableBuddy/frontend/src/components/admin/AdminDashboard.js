@@ -183,7 +183,7 @@ const AdminDashboard = () => {
             {/* Total Restaurants */}
             <div className="bg-white rounded-lg shadow-md p-6">
               <div className="flex items-center">
-                <div className="p-3 rounded-full bg-blue-100 text-blue-600">
+                <div className="p-3 rounded-full bg-primary/10 text-primary">
                   <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path 
                       strokeLinecap="round" 

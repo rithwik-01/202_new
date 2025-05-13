@@ -138,7 +138,7 @@ const RestaurantMap = ({ address, city, state, zipCode, name, latitude, longitud
         <div className="flex justify-center space-x-2">
           <button
             onClick={getUserLocation}
-            className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded text-sm"
+            className="bg-primary/50 hover:bg-primary text-white py-1 px-3 rounded text-sm"
           >
             Show My Location
           </button>

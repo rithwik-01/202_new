@@ -74,7 +74,7 @@ const SystemAnalytics = () => {
   if (!analyticsData) {
     return (
       <div className="container mx-auto px-4 py-8">
-        <div className="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded mb-6" role="alert">
+        <div className="bg-primary/10 border border-blue-400 text-primary/70 px-4 py-3 rounded mb-6" role="alert">
           <p>No analytics data available yet.</p>
         </div>
       </div>
@@ -105,7 +105,7 @@ const SystemAnalytics = () => {
       <div className="mb-6">
         <Link 
           to="/admin/dashboard" 
-          className="inline-flex items-center text-blue-600 hover:text-blue-800"
+          className="inline-flex items-center text-primary hover:text-primary/80"
         >
           <svg className="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 20 20">
             <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -129,7 +129,7 @@ const SystemAnalytics = () => {
               onClick={() => handleTimeRangeChange('week')}
               className={`px-4 py-2 rounded-md text-sm font-medium ${
                 timeRange === 'week'
-                  ? 'bg-blue-600 text-white'
+                  ? 'bg-primary text-white'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}
             >
@@ -139,7 +139,7 @@ const SystemAnalytics = () => {
               onClick={() => handleTimeRangeChange('month')}
               className={`px-4 py-2 rounded-md text-sm font-medium ${
                 timeRange === 'month'
-                  ? 'bg-blue-600 text-white'
+                  ? 'bg-primary text-white'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}
             >
@@ -149,7 +149,7 @@ const SystemAnalytics = () => {
               onClick={() => handleTimeRangeChange('year')}
               className={`px-4 py-2 rounded-md text-sm font-medium ${
                 timeRange === 'year'
-                  ? 'bg-blue-600 text-white'
+                  ? 'bg-primary text-white'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}
             >
@@ -167,8 +167,8 @@ const SystemAnalytics = () => {
               <p className="text-sm font-medium text-gray-500 uppercase">Total Bookings</p>
               <h3 className="text-3xl font-bold mt-1">{total_bookings}</h3>
             </div>
-            <div className="bg-blue-100 p-2 rounded-full">
-              <svg className="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+            <div className="bg-primary/10 p-2 rounded-full">
+              <svg className="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
               </svg>
             </div>
@@ -267,7 +267,7 @@ const SystemAnalytics = () => {
                       <div 
                         className={`h-4 rounded-full ${
                           status === 'confirmed' ? 'bg-green-500' :
-                          status === 'completed' ? 'bg-blue-500' :
+                          status === 'completed' ? 'bg-primary/50' :
                           status === 'cancelled' ? 'bg-gray-500' : 'bg-red-500'
                         }`}
                         style={{ width: `${(count / total_bookings) * 100}%` }}
@@ -316,7 +316,7 @@ const SystemAnalytics = () => {
                       <span className="w-32">{dayName}</span>
                       <div className="flex-1 bg-gray-200 rounded-full h-4 mx-4">
                         <div 
-                          className="bg-blue-500 h-4 rounded-full"
+                          className="bg-primary/50 h-4 rounded-full"
                           style={{ width: maxCount > 0 ? `${(count / maxCount) * 100}%` : '0%' }}
                         ></div>
                       </div>
@@ -385,7 +385,7 @@ const SystemAnalytics = () => {
                     </span>
                     <div className="flex-1 bg-gray-200 rounded-full h-4 mx-4">
                       <div 
-                        className="bg-indigo-500 h-4 rounded-full"
+                        className="bg-primary/50 h-4 rounded-full"
                         style={{ width: `${(timeSlot.count / busy_times[0].count) * 100}%` }}
                       ></div>
                     </div>

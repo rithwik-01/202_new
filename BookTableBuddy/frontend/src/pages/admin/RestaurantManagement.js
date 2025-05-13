@@ -111,7 +111,7 @@ const RestaurantManagement = () => {
       <div className="mb-6">
         <Link 
           to="/admin/dashboard" 
-          className="inline-flex items-center text-blue-600 hover:text-blue-800"
+          className="inline-flex items-center text-primary hover:text-primary/80"
         >
           <svg className="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 20 20">
             <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -148,7 +148,7 @@ const RestaurantManagement = () => {
                 name="status"
                 value={filters.status}
                 onChange={handleFilterChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
               >
                 <option value="all">All Statuses</option>
                 <option value="pending">Pending</option>
@@ -168,7 +168,7 @@ const RestaurantManagement = () => {
                 value={filters.searchTerm}
                 onChange={handleFilterChange}
                 placeholder="Search by name or location"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
               />
             </div>
           </div>
@@ -244,7 +244,7 @@ const RestaurantManagement = () => {
                       <div className="flex justify-end space-x-2">
                         <Link
                           to={`/admin/restaurant-approvals?id=${restaurant.id}`}
-                          className="text-indigo-600 hover:text-indigo-900"
+                          className="text-primary hover:text-primary/90"
                         >
                           View
                         </Link>
@@ -252,7 +252,7 @@ const RestaurantManagement = () => {
                         {restaurant.approval_status === 'pending' && (
                           <Link
                             to={`/admin/restaurant-approvals?id=${restaurant.id}`}
-                            className="text-blue-600 hover:text-blue-900"
+                            className="text-primary hover:text-primary/90"
                           >
                             Review
                           </Link>
@@ -276,7 +276,7 @@ const RestaurantManagement = () => {
               {Object.values(filters).some(value => value !== '' && value !== 'all') && (
                 <button
                   onClick={handleClearFilters}
-                  className="mt-2 text-indigo-600 hover:text-indigo-900"
+                  className="mt-2 text-primary hover:text-primary/90"
                 >
                   Clear Filters
                 </button>

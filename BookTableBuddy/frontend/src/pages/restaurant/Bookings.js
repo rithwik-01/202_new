@@ -194,7 +194,7 @@ const Bookings = () => {
                 name="status"
                 value={filters.status}
                 onChange={handleFilterChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
               >
                 <option value="all">All Statuses</option>
                 <option value="confirmed">Confirmed</option>
@@ -214,7 +214,7 @@ const Bookings = () => {
                 name="date"
                 value={filters.date}
                 onChange={handleFilterChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
               />
             </div>
             
@@ -229,7 +229,7 @@ const Bookings = () => {
                 value={filters.searchTerm}
                 onChange={handleFilterChange}
                 placeholder="Search by name, email, phone or reference"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
               />
             </div>
           </div>
@@ -304,7 +304,7 @@ const Bookings = () => {
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
                         ${booking.status === 'confirmed' ? 'bg-green-100 text-green-800' : 
-                          booking.status === 'completed' ? 'bg-blue-100 text-blue-800' : 
+                          booking.status === 'completed' ? 'bg-primary/10 text-primary/80' : 
                           booking.status === 'cancelled' ? 'bg-gray-100 text-gray-800' : 
                           'bg-red-100 text-red-800'}`}
                       >
@@ -315,7 +315,7 @@ const Bookings = () => {
                       <div className="flex justify-end space-x-2">
                         <Link
                           to={`/restaurant/booking/${booking.id}`}
-                          className="text-indigo-600 hover:text-indigo-900"
+                          className="text-primary hover:text-primary/90"
                         >
                           View
                         </Link>
@@ -340,7 +340,7 @@ const Bookings = () => {
                         {(booking.status === 'no_show' || booking.status === 'completed') && (
                           <button
                             onClick={() => handleUpdateStatus(booking.id, 'confirmed')}
-                            className="text-blue-600 hover:text-blue-900"
+                            className="text-primary hover:text-primary/90"
                           >
                             Revert
                           </button>
@@ -357,7 +357,7 @@ const Bookings = () => {
               {Object.values(filters).some(value => value !== '' && value !== 'all') && (
                 <button
                   onClick={handleClearFilters}
-                  className="mt-2 text-indigo-600 hover:text-indigo-900"
+                  className="mt-2 text-primary hover:text-primary/90"
                 >
                   Clear Filters
                 </button>

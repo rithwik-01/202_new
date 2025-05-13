@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../../api/api';
 import { useAuth } from '../../contexts/AuthContext';
-import Calendar from '../../components/restaurant/Calendar';
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -413,8 +412,8 @@ const Dashboard = () => {
           <h3 className="text-gray-500 text-sm font-medium mb-2">TOTAL BOOKINGS</h3>
           <div className="flex items-center">
             <div className="text-3xl font-bold">{stats.totalBookings}</div>
-            <div className="ml-auto bg-blue-100 p-2 rounded-full">
-              <svg className="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+            <div className="ml-auto bg-primary/10 p-2 rounded-full">
+              <svg className="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
               </svg>
             </div>
@@ -469,7 +468,7 @@ const Dashboard = () => {
           <h2 className="text-xl font-semibold">Booking Analytics</h2>
           <button
             onClick={() => document.getElementById('detailed-analytics').scrollIntoView({ behavior: 'smooth' })}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm"
+            className="bg-primary hover:bg-primary/80 text-white px-4 py-2 rounded-md text-sm"
           >
             View Detailed Analytics
           </button>
@@ -488,9 +487,9 @@ const Dashboard = () => {
             <h3 className="text-sm text-gray-500 mb-1">No-Shows</h3>
             <p className="text-xl font-bold text-yellow-600">{stats.noShowBookings || 0}</p>
           </div>
-          <div className="p-4 bg-indigo-50 rounded-lg">
+          <div className="p-4 bg-primary/5 rounded-lg">
             <h3 className="text-sm text-gray-500 mb-1">Completion Rate</h3>
-            <p className="text-xl font-bold text-indigo-600">
+            <p className="text-xl font-bold text-primary">
               {stats.totalBookings ? Math.round((stats.completedBookings / stats.totalBookings) * 100) : 0}%
             </p>
           </div>
@@ -535,7 +534,7 @@ const Dashboard = () => {
                     <td className="px-4 py-3 whitespace-nowrap">
                       <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
                         ${booking.status === 'confirmed' ? 'bg-green-100 text-green-800' : 
-                          booking.status === 'completed' ? 'bg-blue-100 text-blue-800' : 
+                          booking.status === 'completed' ? 'bg-primary/10 text-primary/80' : 
                           booking.status === 'cancelled' ? 'bg-red-100 text-red-800' : 
                           'bg-gray-100 text-gray-800'}`}>
                         {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
@@ -570,121 +569,6 @@ const Dashboard = () => {
             </table>
           </div>
         )}
-      </div>
-      
-      {/* Calendar View for All Bookings */}
-      {selectedRestaurantId && (
-        <Calendar restaurantId={selectedRestaurantId} />
-      )}
-      
-      {/* Detailed Analytics Section */}
-      <div id="detailed-analytics" className="bg-white rounded-lg shadow-md p-6 mt-6">
-        <h2 className="text-xl font-semibold mb-6">Detailed Booking Analytics</h2>
-        
-        <div className="mb-8">
-          <h3 className="text-lg font-medium mb-4">Bookings by Status (Last 30 Days)</h3>
-          <div className="bg-gray-50 p-4 rounded-lg">
-            {stats.dailyBookings && stats.dailyBookings.length > 0 ? (
-              <div>
-                <div className="grid grid-cols-3 gap-2 mb-4">
-                  <div className="text-center p-3 bg-green-100 rounded-lg">
-                    <h4 className="text-sm text-gray-500 mb-1">Completed</h4>
-                    <p className="text-2xl font-bold text-green-600">{stats.completedBookings || 0}</p>
-                  </div>
-                  <div className="text-center p-3 bg-red-100 rounded-lg">
-                    <h4 className="text-sm text-gray-500 mb-1">Cancelled</h4>
-                    <p className="text-2xl font-bold text-red-600">{stats.cancelledBookings || 0}</p>
-                  </div>
-                  <div className="text-center p-3 bg-yellow-100 rounded-lg">
-                    <h4 className="text-sm text-gray-500 mb-1">No-Shows</h4>
-                    <p className="text-2xl font-bold text-yellow-600">{stats.noShowBookings || 0}</p>
-                  </div>
-                </div>
-                
-                <h4 className="text-sm font-medium text-gray-500 mb-2">Daily Booking Trends</h4>
-                <div className="h-64 overflow-x-auto">
-                  <div className="min-w-max">
-                    <div className="flex h-60">
-                      {Array.isArray(stats.dailyBookings) && stats.dailyBookings
-                        // Don't reverse the array, display from oldest to newest date (left to right)
-                        .filter(day => day && typeof day.count !== 'undefined')
-                        .map((day, index) => {
-                          // Format date safely - fixing timezone issues by using proper parsing
-                          let dateStr = '';
-                          try {
-                            if (day.date) {
-                              // Parse the date string with explicit parts to avoid timezone issues
-                              const parts = day.date.split('-');
-                              if (parts.length === 3) {
-                                const year = parseInt(parts[0]);
-                                const month = parseInt(parts[1]) - 1; // Month is 0-indexed in JS Date
-                                const dayNum = parseInt(parts[2]);
-                                
-                                // Create date at UTC time to avoid timezone shifts
-                                const dateObj = new Date(Date.UTC(year, month, dayNum));
-                                dateStr = `${month+1}/${dayNum}`;
-                              } else {
-                                dateStr = day.date;
-                              }
-                            }
-                          } catch (e) {
-                            console.error('Error formatting date:', e);
-                            dateStr = `Day ${index}`;
-                          }
-                          
-                          return (
-                            <div key={day.date || index} className="flex flex-col justify-end items-center mx-1 w-10">
-                              <div className="text-xs text-center mb-1">{day.count || 0}</div>
-                              <div 
-                                className="w-8 bg-blue-500 rounded-sm" 
-                                style={{ height: `${Math.max((day.count || 0) * 10, 1)}%` }}
-                              ></div>
-                              <div className="text-xs text-gray-500 mt-1">{dateStr}</div>
-                            </div>
-                          );
-                        })}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <p className="text-gray-500 text-center py-10">No booking data available for the last 30 days.</p>
-            )}
-          </div>
-        </div>
-        
-        {/* Bookings by Day of Week chart removed as requested */}
-
-        
-        <div>
-          <h3 className="text-lg font-medium mb-4">Completion Rate by Time Period</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-gray-50 p-4 rounded-lg text-center">
-              <h4 className="text-sm text-gray-500 mb-2">Today</h4>
-              <div className="text-2xl font-bold">
-                {Array.isArray(todayBookings) && todayBookings.length > 0 
-                  ? Math.round((todayBookings.filter(b => b && b.status === 'completed').length / todayBookings.length) * 100) 
-                  : 0}%
-              </div>
-            </div>
-            <div className="bg-gray-50 p-4 rounded-lg text-center">
-              <h4 className="text-sm text-gray-500 mb-2">This Week</h4>
-              <div className="text-2xl font-bold">
-                {(stats && typeof stats.totalBookings === 'number' && stats.totalBookings > 0 && typeof stats.completedBookings === 'number')
-                  ? Math.round((stats.completedBookings / stats.totalBookings) * 100) 
-                  : 0}%
-              </div>
-            </div>
-            <div className="bg-gray-50 p-4 rounded-lg text-center">
-              <h4 className="text-sm text-gray-500 mb-2">Cancellation Rate</h4>
-              <div className="text-2xl font-bold text-red-600">
-                {(stats && typeof stats.totalBookings === 'number' && stats.totalBookings > 0 && typeof stats.cancelledBookings === 'number')
-                  ? Math.round((stats.cancelledBookings / stats.totalBookings) * 100) 
-                  : 0}%
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
 
       <div className="grid grid-cols-1 gap-6 mt-6">
@@ -722,7 +606,7 @@ const Dashboard = () => {
                         </div>
                         <Link 
                           to="/restaurant/profile" 
-                          className="text-blue-600 hover:text-blue-800"
+                          className="text-primary hover:text-primary/80"
                           onClick={() => setSelectedRestaurantId(restaurant.id)}
                         >
                           Edit Details
@@ -735,7 +619,7 @@ const Dashboard = () => {
                 <div className="mt-4">
                   <Link 
                     to="/restaurant/profile" 
-                    className="inline-block bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition duration-300"
+                    className="inline-block bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300"
                   >
                     Add Another Restaurant
                   </Link>
@@ -746,10 +630,10 @@ const Dashboard = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
               <Link 
                 to="/restaurant/profile" 
-                className="flex items-center p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition duration-300"
+                className="flex items-center p-4 bg-primary/5 rounded-lg hover:bg-primary/10 transition duration-300"
               >
-                <div className="bg-blue-100 p-3 rounded-full mr-4">
-                  <svg className="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                <div className="bg-primary/10 p-3 rounded-full mr-4">
+                  <svg className="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
                   </svg>
                 </div>

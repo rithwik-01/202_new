@@ -332,7 +332,7 @@ const Photos = () => {
                           <div className="space-x-2">
                             <button
                               onClick={() => handleEditPhoto(photo)}
-                              className="text-indigo-600 hover:text-indigo-900 text-sm"
+                              className="text-primary-600 hover:text-primary-500 text-sm"
                             >
                               Edit
                             </button>
@@ -368,9 +368,9 @@ const Photos = () => {
         
         {/* Add/Edit Photo Form */}
         <div>
-          <div id="photo-form" className="bg-white rounded-lg shadow-md overflow-hidden">
+          <div id="photo-form" className="bg-white rounded-lg shadow-soft overflow-hidden">
             <div className="px-6 py-4 border-b border-gray-200">
-              <h2 className="text-xl font-semibold">
+              <h2 className="text-xl font-display font-semibold">
                 {editingPhoto ? 'Edit Photo' : 'Add New Photo'}
               </h2>
             </div>
@@ -388,7 +388,7 @@ const Photos = () => {
                       name="image_url"
                       value={formData.image_url}
                       onChange={handleInputChange}
-                      className={`w-full px-3 py-2 border ${formErrors.image_url ? 'border-red-300' : 'border-gray-300'} rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500`}
+                      className={`w-full px-3 py-2 border ${formErrors.image_url ? 'border-red-300' : 'border-gray-300'} rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary`}
                       placeholder="https://example.com/image.jpg"
                     />
                     {formErrors.image_url && (
@@ -426,7 +426,7 @@ const Photos = () => {
                       name="caption"
                       value={formData.caption}
                       onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
                       placeholder="Describe this photo"
                     />
                   </div>
@@ -438,7 +438,7 @@ const Photos = () => {
                       name="is_primary"
                       checked={formData.is_primary}
                       onChange={handleInputChange}
-                      className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                      className="h-4 w-4 text-primary border-gray-300 rounded focus:ring-primary"
                     />
                     <label htmlFor="is_primary" className="ml-2 text-sm text-gray-700">
                       Set as primary photo (featured image)
@@ -457,7 +457,7 @@ const Photos = () => {
                     )}
                     <button
                       type="submit"
-                      className="ml-auto bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-md transition duration-300 inline-flex items-center"
+                      className="ml-auto btn-primary"
                       disabled={isSubmitting}
                     >
                       {isSubmitting ? (
@@ -478,9 +478,9 @@ const Photos = () => {
             </div>
           </div>
           
-          <div className="mt-6 bg-blue-50 rounded-lg p-4">
-            <h3 className="text-blue-800 font-medium mb-2">Photo Tips</h3>
-            <ul className="text-sm text-blue-700 space-y-2">
+          <div className="mt-6 bg-primary-50 rounded-lg p-4">
+            <h3 className="text-primary-800 font-medium mb-2">Photo Tips</h3>
+            <ul className="text-sm text-primary-700 space-y-2">
               <li>• Use high-quality, well-lit photos of your restaurant.</li>
               <li>• Include photos of your interior, exterior, and food.</li>
               <li>• The primary photo will be displayed as the main image in search results.</li>

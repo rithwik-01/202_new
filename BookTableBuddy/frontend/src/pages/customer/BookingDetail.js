@@ -64,7 +64,7 @@ const BookingDetail = () => {
       case 'confirmed':
         return 'bg-green-100 text-green-800';
       case 'completed':
-        return 'bg-blue-100 text-blue-800';
+        return 'bg-primary/10 text-primary/80';
       case 'cancelled':
         return 'bg-gray-100 text-gray-800';
       case 'no_show':
@@ -96,7 +96,7 @@ const BookingDetail = () => {
         <div className="text-center">
           <Link 
             to="/customer/bookings" 
-            className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition duration-300"
+            className="inline-block bg-primary hover:bg-primary/80 text-white font-bold py-2 px-4 rounded-md transition duration-300"
           >
             Back to My Bookings
           </Link>
@@ -112,7 +112,7 @@ const BookingDetail = () => {
       <div className="mb-6">
         <Link 
           to="/customer/bookings" 
-          className="inline-flex items-center text-blue-600 hover:text-blue-800"
+          className="inline-flex items-center text-primary hover:text-primary/80"
         >
           <svg className="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 20 20">
             <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -244,7 +244,7 @@ const BookingDetail = () => {
             <div className="flex gap-3">
               <Link 
                 to={`/customer/restaurant/${booking.restaurant_id}`}
-                className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition duration-300"
+                className="inline-block bg-primary hover:bg-primary/80 text-white font-medium py-2 px-4 rounded-md transition duration-300"
               >
                 View Restaurant
               </Link>

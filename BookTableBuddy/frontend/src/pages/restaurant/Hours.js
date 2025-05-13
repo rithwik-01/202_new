@@ -252,7 +252,7 @@ const Hours = () => {
                           id={`opening-time-${day.value}`}
                           value={hours[index]?.opening_time?.substring(0, 5) || '09:00'}
                           onChange={(e) => handleHourChange(index, 'opening_time', `${e.target.value}:00`)}
-                          className="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                          className="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
                           disabled={hours[index]?.is_closed}
                         />
                       </div>
@@ -266,7 +266,7 @@ const Hours = () => {
                           id={`closing-time-${day.value}`}
                           value={hours[index]?.closing_time?.substring(0, 5) || '17:00'}
                           onChange={(e) => handleHourChange(index, 'closing_time', `${e.target.value}:00`)}
-                          className="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                          className="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
                           disabled={hours[index]?.is_closed}
                         />
                       </div>
@@ -279,7 +279,7 @@ const Hours = () => {
                       id={`closed-${day.value}`}
                       checked={hours[index]?.is_closed || false}
                       onChange={() => handleToggleClosed(index)}
-                      className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                      className="h-4 w-4 text-primary border-gray-300 rounded focus:ring-primary"
                     />
                     <label htmlFor={`closed-${day.value}`} className="ml-2 text-sm text-gray-700">
                       Closed
@@ -292,7 +292,7 @@ const Hours = () => {
                     <button
                       type="button"
                       onClick={() => handleCopyFromPrevious(index)}
-                      className="text-indigo-600 hover:text-indigo-900 text-sm"
+                      className="text-primary hover:text-primary/90 text-sm"
                       title={`Copy hours from ${days[index - 1].label}`}
                     >
                       Copy Previous
@@ -301,7 +301,7 @@ const Hours = () => {
                   <button
                     type="button"
                     onClick={() => handleApplyToAll(index)}
-                    className="text-blue-600 hover:text-blue-900 text-sm whitespace-nowrap"
+                    className="text-primary hover:text-primary/90 text-sm whitespace-nowrap"
                     title="Apply these hours to all days"
                   >
                     Apply to All
@@ -334,9 +334,9 @@ const Hours = () => {
         </div>
       </div>
       
-      <div className="bg-blue-50 rounded-lg p-4">
-        <h3 className="text-blue-800 font-medium mb-2">Operating Hours Tips</h3>
-        <ul className="text-sm text-blue-700 space-y-2">
+      <div className="bg-primary/5 rounded-lg p-4">
+        <h3 className="text-primary/80 font-medium mb-2">Operating Hours Tips</h3>
+        <ul className="text-sm text-primary/70 space-y-2">
           <li>• Enter times in 24-hour format (e.g., 14:00 for 2:00 PM).</li>
           <li>• Mark days as "Closed" when your restaurant is not open.</li>
           <li>• Use "Copy Previous" to quickly set the same hours as the day above.</li>

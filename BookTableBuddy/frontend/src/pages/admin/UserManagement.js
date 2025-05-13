@@ -145,7 +145,7 @@ const UserManagement = () => {
   const getRoleBadgeClass = (role) => {
     switch (role) {
       case 'customer':
-        return 'bg-blue-100 text-blue-800';
+        return 'bg-primary/10 text-primary/80';
       case 'restaurant_manager':
         return 'bg-green-100 text-green-800';
       case 'admin':
@@ -173,7 +173,7 @@ const UserManagement = () => {
       <div className="mb-6">
         <Link 
           to="/admin/dashboard" 
-          className="inline-flex items-center text-blue-600 hover:text-blue-800"
+          className="inline-flex items-center text-primary hover:text-primary/80"
         >
           <svg className="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 20 20">
             <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -222,7 +222,7 @@ const UserManagement = () => {
                 name="role"
                 value={filters.role}
                 onChange={handleFilterChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
               >
                 <option value="all">All Roles</option>
                 <option value="customer">Customers</option>
@@ -242,7 +242,7 @@ const UserManagement = () => {
                 value={filters.searchTerm}
                 onChange={handleFilterChange}
                 placeholder="Search by name, username, or email"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
               />
             </div>
           </div>
@@ -310,7 +310,7 @@ const UserManagement = () => {
                         <select
                           value={user.role}
                           onChange={(e) => handleRoleChange(user.id, e.target.value)}
-                          className="block w-full pl-3 pr-10 py-1 text-sm border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md"
+                          className="block w-full pl-3 pr-10 py-1 text-sm border-gray-300 focus:outline-none focus:ring-primary focus:border-primary rounded-md"
                           disabled={actionStatus.processing}
                         >
                           <option value="customer">Customer</option>
@@ -339,7 +339,7 @@ const UserManagement = () => {
                       ) : (
                         <button
                           onClick={() => setEditingUser(user.id)}
-                          className="text-indigo-600 hover:text-indigo-900"
+                          className="text-primary hover:text-primary/90"
                         >
                           Change Role
                         </button>
@@ -355,7 +355,7 @@ const UserManagement = () => {
               {Object.values(filters).some(value => value !== '' && value !== 'all') && (
                 <button
                   onClick={handleClearFilters}
-                  className="mt-2 text-indigo-600 hover:text-indigo-900"
+                  className="mt-2 text-primary hover:text-primary/90"
                 >
                   Clear Filters
                 </button>

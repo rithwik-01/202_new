@@ -72,7 +72,7 @@ const MyBookings = () => {
       case 'confirmed':
         return 'bg-green-100 text-green-800';
       case 'completed':
-        return 'bg-blue-100 text-blue-800';
+        return 'bg-primary/10 text-primary/80';
       case 'cancelled':
         return 'bg-gray-100 text-gray-800';
       case 'no_show':
@@ -176,7 +176,7 @@ const MyBookings = () => {
                       <div className="flex space-x-2">
                         <Link 
                           to={`/customer/booking/${booking.id}`}
-                          className="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-center font-medium py-2 px-4 rounded-md transition duration-300"
+                          className="flex-1 bg-primary hover:bg-primary/80 text-white text-center font-medium py-2 px-4 rounded-md transition duration-300"
                         >
                           View Details
                         </Link>
@@ -241,7 +241,7 @@ const MyBookings = () => {
                         <td className="px-6 py-4 whitespace-nowrap text-sm">
                           <Link 
                             to={`/customer/booking/${booking.id}`}
-                            className="text-blue-600 hover:text-blue-900"
+                            className="text-primary hover:text-primary/90"
                           >
                             View Details
                           </Link>

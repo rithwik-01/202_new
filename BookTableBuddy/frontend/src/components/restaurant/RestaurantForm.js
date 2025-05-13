@@ -300,7 +300,7 @@ const RestaurantForm = () => {
       <div className="mb-6">
         <button
           onClick={() => navigate(-1)}
-          className="inline-flex items-center text-gray-600 hover:text-red-600"
+          className="inline-flex items-center text-gray-600 hover:text-primary-600 transition-colors duration-200"
         >
           <svg 
             className="h-5 w-5 mr-1" 
@@ -319,7 +319,7 @@ const RestaurantForm = () => {
         </button>
       </div>
       
-      <h1 className="text-3xl font-bold text-gray-900 mb-8">
+      <h1 className="text-3xl font-display font-bold text-gray-900 mb-8">
         {isEditMode ? 'Edit Restaurant' : 'Add New Restaurant'}
       </h1>
       
@@ -371,11 +371,11 @@ const RestaurantForm = () => {
         </div>
       )}
       
-      <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-lg p-6">
+      <form onSubmit={handleSubmit} className="bg-white shadow-soft rounded-xl p-6">
         <div className="space-y-8">
           {/* Basic Information */}
           <div>
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Basic Information</h2>
+            <h2 className="text-xl font-display font-semibold text-gray-900 mb-4">Basic Information</h2>
             <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
               <div className="sm:col-span-4">
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700">
@@ -433,7 +433,7 @@ const RestaurantForm = () => {
           
           {/* Cuisine Selection */}
           <div>
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Cuisine Types</h2>
+            <h2 className="text-xl font-display font-semibold text-gray-900 mb-4">Cuisine Types</h2>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {cuisines.map(cuisine => (
                 <div key={cuisine.id} className="flex items-center">
@@ -459,7 +459,7 @@ const RestaurantForm = () => {
           
           {/* Contact Information */}
           <div>
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Contact Information</h2>
+            <h2 className="text-xl font-display font-semibold text-gray-900 mb-4">Contact Information</h2>
             <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
               <div className="sm:col-span-3">
                 <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
@@ -510,7 +510,7 @@ const RestaurantForm = () => {
           
           {/* Location */}
           <div>
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Location</h2>
+            <h2 className="text-xl font-display font-semibold text-gray-900 mb-4">Location</h2>
             <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
               <div className="sm:col-span-6">
                 <label htmlFor="address" className="block text-sm font-medium text-gray-700">
@@ -606,7 +606,7 @@ const RestaurantForm = () => {
           
           {/* Hours */}
           <div>
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Operating Hours</h2>
+            <h2 className="text-xl font-display font-semibold text-gray-900 mb-4">Operating Hours</h2>
             <div className="space-y-4">
               {formData.hours.map((hour, index) => (
                 <div key={hour.day} className="grid grid-cols-1 gap-4 sm:grid-cols-3 items-center">
@@ -645,11 +645,11 @@ const RestaurantForm = () => {
           {/* Tables */}
           <div>
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-semibold text-gray-900">Tables</h2>
+              <h2 className="text-xl font-display font-semibold text-gray-900">Tables</h2>
               <button
                 type="button"
                 onClick={addTable}
-                className="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                className="btn-accent"
               >
                 <svg 
                   className="-ml-1 mr-1 h-5 w-5" 
@@ -723,11 +723,11 @@ const RestaurantForm = () => {
           {/* Photos */}
           <div>
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-semibold text-gray-900">Photos</h2>
+              <h2 className="text-xl font-display font-semibold text-gray-900">Photos</h2>
               <button
                 type="button"
                 onClick={addPhoto}
-                className="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                className="btn-accent"
               >
                 <svg 
                   className="-ml-1 mr-1 h-5 w-5" 
@@ -817,14 +817,14 @@ const RestaurantForm = () => {
               <button
                 type="button"
                 onClick={() => navigate('/restaurant/dashboard')}
-                className="mr-3 py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                className="btn-secondary mr-3"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={isSubmitting || formData.cuisine.length === 0}
-                className="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50"
+                className="btn-primary"
               >
                 {isSubmitting ? (
                   <>

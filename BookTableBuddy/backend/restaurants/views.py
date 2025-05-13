@@ -37,14 +37,14 @@ class IsAdminUser(permissions.BasePermission):
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
     """
-    Custom permission to only allow owners of a restaurant to edit it
+    Custom permission to only allow owners of a restaurant or admins to edit it
     """
     def has_object_permission(self, request, view, obj):
-        # Read permissions are allowed to any request
         if request.method in permissions.SAFE_METHODS:
             return True
-        
-        # Write permissions are only allowed to the restaurant manager
+        # Allow admins to edit any restaurant
+        if hasattr(request.user, 'role') and request.user.role == User.ADMIN:
+            return True
         return obj.manager == request.user
 
 class CuisineListView(generics.ListCreateAPIView):
