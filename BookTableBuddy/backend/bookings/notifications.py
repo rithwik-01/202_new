@@ -19,7 +19,7 @@ def send_booking_confirmation(booking):
         print(f"Starting to send confirmation email for booking {booking.id} using Django's email system")
         
         # Create a more eye-catching subject with restaurant name
-        subject = f"Your reservation at {booking.table.restaurant.name} is confirmed! - BookTableBuddy"
+        subject = f"Your reservation at {booking.table.restaurant.name} is confirmed! - DineTable"
         
         # Format the date and time for better readability
         formatted_date = booking.date.strftime("%A, %B %d, %Y")
@@ -54,6 +54,7 @@ Thank you for using BookTableBuddy!
             
             # Send email using Django's send_mail function
             print("Sending email using Django's email system...")
+            message = message.replace('BookTableBuddy', 'DineTable')
             send_mail(
                 subject=subject,
                 message=message,

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { getRestaurantDetails, createBooking } from '../../api/api';
 import { useAuth } from '../../contexts/AuthContext';
+import { CheckCircle } from 'lucide-react';
 
 const BookingForm = () => {
   const { id } = useParams();
@@ -168,19 +169,7 @@ const BookingForm = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="bg-white shadow-md rounded-lg p-8 max-w-lg mx-auto">
           <div className="text-center mb-6">
-            <svg 
-              className="mx-auto h-16 w-16 text-green-500" 
-              fill="none" 
-              viewBox="0 0 24 24" 
-              stroke="currentColor"
-            >
-              <path 
-                strokeLinecap="round" 
-                strokeLinejoin="round" 
-                strokeWidth="2" 
-                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" 
-              />
-            </svg>
+            <CheckCircle className="mx-auto h-16 w-16 text-green-500" />
             <h2 className="mt-4 text-2xl font-bold text-gray-900">Booking Confirmed!</h2>
           </div>
           

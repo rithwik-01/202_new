@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../../api/api';
+import { Users, Building, CalendarCheck, BarChart, CheckCircle, XCircle } from 'lucide-react';
 
 const Dashboard = () => {
   const [stats, setStats] = useState(null);
@@ -104,9 +105,7 @@ const Dashboard = () => {
               <h3 className="text-3xl font-bold">{stats?.total_users || 0}</h3>
             </div>
             <div className="bg-primary/10 p-2 rounded-full">
-              <svg className="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
-              </svg>
+              <Users className="w-6 h-6 text-primary" />
             </div>
           </div>
           <div className="flex space-x-4 text-sm">
@@ -126,9 +125,7 @@ const Dashboard = () => {
               <h3 className="text-3xl font-bold">{stats?.total_restaurants || 0}</h3>
             </div>
             <div className="bg-green-100 p-2 rounded-full">
-              <svg className="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm0 10a1 1 0 011 1v1h1a1 1 0 110 2H6v1a1 1 0 11-2 0v-1H3a1 1 0 110-2h1v-1a1 1 0 011-1zM12 2a1 1 0 01.967.744L14.146 7.2 17.5 9.134a1 1 0 010 1.732l-3.354 1.935-1.18 4.455a1 1 0 01-1.933 0L9.854 12.8 6.5 10.866a1 1 0 010-1.732l3.354-1.935 1.18-4.455A1 1 0 0112 2z" clipRule="evenodd" />
-              </svg>
+              <Building className="w-6 h-6 text-green-600" />
             </div>
           </div>
           <div className="flex space-x-4 text-sm">
@@ -148,9 +145,7 @@ const Dashboard = () => {
               <h3 className="text-3xl font-bold">{stats?.total_bookings || 0}</h3>
             </div>
             <div className="bg-purple-100 p-2 rounded-full">
-              <svg className="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
-              </svg>
+              <CalendarCheck className="w-6 h-6 text-purple-600" />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-2 text-sm">
@@ -183,9 +178,7 @@ const Dashboard = () => {
               className="flex flex-col items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition duration-300"
             >
               <div className="bg-primary/10 p-3 rounded-full mb-3">
-                <svg className="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
+                <Users className="w-6 h-6 text-primary" />
               </div>
               <span className="text-gray-800 font-medium text-center">Restaurant Approvals</span>
               {pendingApprovals.length > 0 && (
@@ -200,9 +193,7 @@ const Dashboard = () => {
               className="flex flex-col items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition duration-300"
             >
               <div className="bg-green-100 p-3 rounded-full mb-3">
-                <svg className="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                </svg>
+                <Building className="w-6 h-6 text-green-600" />
               </div>
               <span className="text-gray-800 font-medium text-center">Manage Restaurants</span>
             </Link>
@@ -212,9 +203,7 @@ const Dashboard = () => {
               className="flex flex-col items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition duration-300"
             >
               <div className="bg-purple-100 p-3 rounded-full mb-3">
-                <svg className="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
-                </svg>
+                <Users className="w-6 h-6 text-purple-600" />
               </div>
               <span className="text-gray-800 font-medium text-center">User Management</span>
             </Link>
@@ -224,10 +213,7 @@ const Dashboard = () => {
               className="flex flex-col items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition duration-300"
             >
               <div className="bg-red-100 p-3 rounded-full mb-3">
-                <svg className="w-6 h-6 text-red-600" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z" />
-                  <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z" />
-                </svg>
+                <BarChart className="w-6 h-6 text-red-600" />
               </div>
               <span className="text-gray-800 font-medium text-center">System Analytics</span>
             </Link>

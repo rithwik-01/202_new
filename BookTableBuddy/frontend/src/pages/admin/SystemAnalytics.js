@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../../api/api';
+import { BarChart, Users, Building, DollarSign, ArrowLeft } from 'lucide-react';
 
 const SystemAnalytics = () => {
   const [analyticsData, setAnalyticsData] = useState(null);
@@ -107,9 +108,7 @@ const SystemAnalytics = () => {
           to="/admin/dashboard" 
           className="inline-flex items-center text-primary hover:text-primary/80"
         >
-          <svg className="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
-          </svg>
+          <ArrowLeft className="w-5 h-5 mr-1" />
           Back to Dashboard
         </Link>
       </div>
@@ -168,9 +167,7 @@ const SystemAnalytics = () => {
               <h3 className="text-3xl font-bold mt-1">{total_bookings}</h3>
             </div>
             <div className="bg-primary/10 p-2 rounded-full">
-              <svg className="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
-              </svg>
+              <BarChart className="w-6 h-6 text-primary" />
             </div>
           </div>
           {analyticsData.previous_total_bookings !== undefined && (
@@ -195,9 +192,7 @@ const SystemAnalytics = () => {
               <h3 className="text-3xl font-bold mt-1">{total_users}</h3>
             </div>
             <div className="bg-green-100 p-2 rounded-full">
-              <svg className="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
-              </svg>
+              <Users className="w-6 h-6 text-green-600" />
             </div>
           </div>
           <div className="flex space-x-4 text-sm">
@@ -217,9 +212,7 @@ const SystemAnalytics = () => {
               <h3 className="text-3xl font-bold mt-1">{total_restaurants}</h3>
             </div>
             <div className="bg-purple-100 p-2 rounded-full">
-              <svg className="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm0 10a1 1 0 011 1v1h1a1 1 0 110 2H6v1a1 1 0 11-2 0v-1H3a1 1 0 110-2h1v-1a1 1 0 011-1zM12 2a1 1 0 01.967.744L14.146 7.2 17.5 9.134a1 1 0 010 1.732l-3.354 1.935-1.18 4.455a1 1 0 01-1.933 0L9.854 12.8 6.5 10.866a1 1 0 010-1.732l3.354-1.935 1.18-4.455A1 1 0 0112 2z" clipRule="evenodd" />
-              </svg>
+              <Building className="w-6 h-6 text-purple-600" />
             </div>
           </div>
           <div className="flex space-x-4 text-sm">
@@ -239,9 +232,7 @@ const SystemAnalytics = () => {
               <h3 className="text-3xl font-bold mt-1">${revenue_estimate?.toFixed(2) || '0.00'}</h3>
             </div>
             <div className="bg-red-100 p-2 rounded-full">
-              <svg className="w-6 h-6 text-red-600" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
-              </svg>
+              <DollarSign className="w-6 h-6 text-red-600" />
             </div>
           </div>
           <div className="text-sm text-gray-500">
@@ -250,78 +241,37 @@ const SystemAnalytics = () => {
         </div>
       </div>
       
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Bookings by Status */}
+      <div className="grid grid-cols-1 gap-8">
         <div className="bg-white rounded-lg shadow-md overflow-hidden">
           <div className="px-6 py-4 border-b border-gray-200">
-            <h2 className="text-xl font-semibold">Bookings by Status</h2>
+            <h2 className="text-2xl font-bold">Bookings by Day</h2>
           </div>
-          
-          <div className="p-6">
-            {bookings_by_status && Object.keys(bookings_by_status).length > 0 ? (
-              <div className="space-y-4">
-                {Object.entries(bookings_by_status).map(([status, count]) => (
-                  <div key={status} className="flex items-center">
-                    <span className="w-32 capitalize">{status}</span>
-                    <div className="flex-1 bg-gray-200 rounded-full h-4 mx-4">
-                      <div 
-                        className={`h-4 rounded-full ${
-                          status === 'confirmed' ? 'bg-green-500' :
-                          status === 'completed' ? 'bg-primary/50' :
-                          status === 'cancelled' ? 'bg-gray-500' : 'bg-red-500'
-                        }`}
-                        style={{ width: `${(count / total_bookings) * 100}%` }}
-                      ></div>
-                    </div>
-                    <span className="text-right w-16">{count}</span>
-                    <span className="text-right w-16 text-gray-500">
-                      {Math.round((count / total_bookings) * 100)}%
-                    </span>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p className="text-gray-500 text-center py-6">No booking status data available.</p>
-            )}
-          </div>
-        </div>
-        
-        {/* Bookings by Day */}
-        <div className="bg-white rounded-lg shadow-md overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-200">
-            <h2 className="text-xl font-semibold">Bookings by Day</h2>
-          </div>
-          
-          <div className="p-6">
+          <div className="p-8">
             {bookings_by_day && typeof bookings_by_day === 'object' && Object.keys(bookings_by_day).length > 0 ? (
-              <div className="space-y-4">
+              <div className="space-y-6">
                 {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((dayName, index) => {
-                  // Safely extract count, ensuring we're not directly rendering an object
                   let count = 0;
                   if (typeof bookings_by_day[index] === 'number') {
                     count = bookings_by_day[index];
                   } else if (bookings_by_day[index] && typeof bookings_by_day[index].count === 'number') {
                     count = bookings_by_day[index].count;
                   }
-                  
-                  // Safely calculate max count
                   const values = Object.values(bookings_by_day).map(value => {
                     return typeof value === 'number' ? value : 
                            (value && typeof value.count === 'number' ? value.count : 0);
                   });
                   const maxCount = values.length > 0 ? Math.max(...values) : 0;
-                  
                   return (
-                    <div key={dayName} className="flex items-center">
-                      <span className="w-32">{dayName}</span>
-                      <div className="flex-1 bg-gray-200 rounded-full h-4 mx-4">
+                    <div key={dayName} className="flex items-center text-lg">
+                      <span className="w-40 font-semibold">{dayName}</span>
+                      <div className="flex-1 bg-gray-200 rounded-full h-6 mx-6">
                         <div 
-                          className="bg-primary/50 h-4 rounded-full"
+                          className="bg-primary/50 h-6 rounded-full"
                           style={{ width: maxCount > 0 ? `${(count / maxCount) * 100}%` : '0%' }}
                         ></div>
                       </div>
-                      <span className="text-right w-16">{count}</span>
-                      <span className="text-right w-16 text-gray-500">
+                      <span className="text-right w-20 font-bold">{count}</span>
+                      <span className="text-right w-20 text-gray-500">
                         {total_bookings > 0 ? Math.round((count / total_bookings) * 100) : 0}%
                       </span>
                     </div>
@@ -329,75 +279,7 @@ const SystemAnalytics = () => {
                 })}
               </div>
             ) : (
-              <p className="text-gray-500 text-center py-6">No booking day data available.</p>
-            )}
-          </div>
-        </div>
-        
-        {/* Popular Restaurants */}
-        <div className="bg-white rounded-lg shadow-md overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-200">
-            <h2 className="text-xl font-semibold">Popular Restaurants</h2>
-          </div>
-          
-          <div className="p-6">
-            {most_popular_restaurants && most_popular_restaurants.length > 0 ? (
-              <div className="space-y-4">
-                {most_popular_restaurants.slice(0, 5).map((restaurant, index) => (
-                  <div key={restaurant.id} className="flex items-center">
-                    <span className="w-8 text-center font-bold text-gray-500">#{index + 1}</span>
-                    <span className="w-48 truncate">{restaurant.name}</span>
-                    <div className="flex-1 bg-gray-200 rounded-full h-4 mx-4">
-                      <div 
-                        className="bg-green-500 h-4 rounded-full"
-                        style={{ width: `${(restaurant.bookings / most_popular_restaurants[0].bookings) * 100}%` }}
-                      ></div>
-                    </div>
-                    <span className="text-right w-16">{restaurant.bookings}</span>
-                    <span className="text-right w-16 text-gray-500">
-                      {restaurant.rating ? restaurant.rating.toFixed(1) : 'N/A'} ★
-                    </span>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p className="text-gray-500 text-center py-6">No restaurant popularity data available.</p>
-            )}
-          </div>
-        </div>
-        
-        {/* Popular Times */}
-        <div className="bg-white rounded-lg shadow-md overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-200">
-            <h2 className="text-xl font-semibold">Popular Booking Times</h2>
-          </div>
-          
-          <div className="p-6">
-            {busy_times && busy_times.length > 0 ? (
-              <div className="space-y-4">
-                {busy_times.slice(0, 5).map((timeSlot, index) => (
-                  <div key={index} className="flex items-center">
-                    <span className="w-32">
-                      {new Date(`1970-01-01T${timeSlot.time}`).toLocaleTimeString([], {
-                        hour: '2-digit',
-                        minute: '2-digit'
-                      })}
-                    </span>
-                    <div className="flex-1 bg-gray-200 rounded-full h-4 mx-4">
-                      <div 
-                        className="bg-primary/50 h-4 rounded-full"
-                        style={{ width: `${(timeSlot.count / busy_times[0].count) * 100}%` }}
-                      ></div>
-                    </div>
-                    <span className="text-right w-16">{timeSlot.count}</span>
-                    <span className="text-right w-16 text-gray-500">
-                      {Math.round((timeSlot.count / total_bookings) * 100)}%
-                    </span>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p className="text-gray-500 text-center py-6">No popular times data available.</p>
+              <p className="text-gray-500 text-center py-8 text-lg">No booking day data available.</p>
             )}
           </div>
         </div>

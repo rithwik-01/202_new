@@ -144,7 +144,7 @@ const RestaurantMap = ({ address, city, state, zipCode, name, latitude, longitud
           </button>
           <button
             onClick={getDirections}
-            className="bg-red-600 hover:bg-red-700 text-white py-1 px-3 rounded text-sm"
+            className="btn-primary py-1 px-3 text-sm"
           >
             Get Directions
           </button>

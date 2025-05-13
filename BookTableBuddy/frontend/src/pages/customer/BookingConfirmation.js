@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useLocation, useNavigate, Link } from 'react-router-dom';
 import api from '../../api/api';
+import { Users, MapPin } from 'lucide-react';
 
 const BookingConfirmation = () => {
   const { id } = useParams();
@@ -186,9 +187,7 @@ const BookingConfirmation = () => {
                   </div>
                   
                   <div className="flex items-start">
-                    <svg className="w-5 h-5 text-gray-500 mr-3 mt-1" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
-                    </svg>
+                    <Users className="w-5 h-5 text-gray-500 mr-3 mt-1" />
                     <div>
                       <p className="font-medium">Party Size</p>
                       <p className="text-gray-600">{bookingData.party_size} {bookingData.party_size === 1 ? 'person' : 'people'}</p>
@@ -197,9 +196,7 @@ const BookingConfirmation = () => {
                   
                   {bookingData.table_number && (
                     <div className="flex items-start">
-                      <svg className="w-5 h-5 text-gray-500 mr-3 mt-1" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
-                      </svg>
+                      <MapPin className="w-5 h-5 text-gray-500 mr-3 mt-1" />
                       <div>
                         <p className="font-medium">Table</p>
                         <p className="text-gray-600">Table #{bookingData.table_number}</p>
@@ -269,14 +266,14 @@ const BookingConfirmation = () => {
             <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
               <Link 
                 to="/customer/bookings" 
-                className="bg-primary hover:bg-primary/80 text-white font-medium py-2 px-6 rounded-md transition duration-300 text-center"
+                className="btn-primary text-center"
               >
                 View All My Bookings
               </Link>
               
               <Link 
                 to="/customer/search" 
-                className="bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2 px-6 rounded-md transition duration-300 text-center"
+                className="btn-secondary text-center"
               >
                 Back to Search
               </Link>
@@ -380,7 +377,7 @@ const BookingConfirmation = () => {
               <div className="pt-4">
                 <button
                   type="submit"
-                  className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded-md transition duration-300"
+                  className="w-full btn-primary py-3 flex justify-center"
                   disabled={submitting}
                 >
                   {submitting ? 'Confirming...' : 'Confirm Reservation'}

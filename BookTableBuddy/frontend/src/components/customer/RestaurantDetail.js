@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { getRestaurantDetails, getAvailableTimes, createReview } from '../../api/api';
 import { useAuth } from '../../contexts/AuthContext';
+import { Star, MapPin, Phone, Mail, Globe, XCircle, CheckCircle, Plus, Eye } from 'lucide-react';
 
 const RestaurantDetail = () => {
   const { id } = useParams();
@@ -137,14 +138,12 @@ const RestaurantDetail = () => {
     return (
       <div className="flex">
         {[1, 2, 3, 4, 5].map(star => (
-          <svg 
-            key={star} 
-            className={`h-5 w-5 ${star <= rating ? 'text-yellow-500' : 'text-gray-300'}`} 
-            fill="currentColor" 
-            viewBox="0 0 20 20"
-          >
-            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-          </svg>
+          <Star 
+            key={star}
+            className={`h-5 w-5 ${star <= rating ? 'text-yellow-500' : 'text-gray-300'}`}
+            fill={star <= rating ? '#f59e42' : 'none'}
+            strokeWidth={star <= rating ? 0 : 2}
+          />
         ))}
       </div>
     );
@@ -239,25 +238,7 @@ const RestaurantDetail = () => {
             </div>
             
             <div className="mt-2 flex items-center text-gray-500">
-              <svg 
-                className="h-5 w-5 text-gray-400 mr-1" 
-                fill="none" 
-                viewBox="0 0 24 24" 
-                stroke="currentColor"
-              >
-                <path 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  strokeWidth="2" 
-                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" 
-                />
-                <path 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  strokeWidth="2" 
-                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" 
-                />
-              </svg>
+              <MapPin className="h-5 w-5 text-gray-400 mr-1" />
               <span>
                 {restaurant.address}, {restaurant.city}, {restaurant.state} {restaurant.zip_code}
               </span>
@@ -269,19 +250,7 @@ const RestaurantDetail = () => {
               onClick={() => setShowMap(!showMap)}
               className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
             >
-              <svg 
-                className="-ml-1 mr-2 h-5 w-5 text-gray-500" 
-                fill="none" 
-                viewBox="0 0 24 24" 
-                stroke="currentColor"
-              >
-                <path 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  strokeWidth="2" 
-                  d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" 
-                />
-              </svg>
+              <MapPin className="-ml-1 mr-2 h-5 w-5 text-gray-500" />
               {showMap ? 'Hide Map' : 'View Map'}
             </button>
             
@@ -374,54 +343,18 @@ const RestaurantDetail = () => {
             <h2 className="text-xl font-semibold mb-4">Contact</h2>
             <div className="space-y-2">
               <div className="flex items-center">
-                <svg 
-                  className="h-5 w-5 text-gray-400 mr-2" 
-                  fill="none" 
-                  viewBox="0 0 24 24" 
-                  stroke="currentColor"
-                >
-                  <path 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round" 
-                    strokeWidth="2" 
-                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" 
-                  />
-                </svg>
+                <Phone className="h-5 w-5 text-gray-400 mr-2" />
                 <span className="text-gray-700">{restaurant.phone}</span>
               </div>
               
               <div className="flex items-center">
-                <svg 
-                  className="h-5 w-5 text-gray-400 mr-2" 
-                  fill="none" 
-                  viewBox="0 0 24 24" 
-                  stroke="currentColor"
-                >
-                  <path 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round" 
-                    strokeWidth="2" 
-                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" 
-                  />
-                </svg>
+                <Mail className="h-5 w-5 text-gray-400 mr-2" />
                 <span className="text-gray-700">{restaurant.email}</span>
               </div>
               
               {restaurant.website && (
                 <div className="flex items-center">
-                  <svg 
-                    className="h-5 w-5 text-gray-400 mr-2" 
-                    fill="none" 
-                    viewBox="0 0 24 24" 
-                    stroke="currentColor"
-                  >
-                    <path 
-                      strokeLinecap="round" 
-                      strokeLinejoin="round" 
-                      strokeWidth="2" 
-                      d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" 
-                    />
-                  </svg>
+                  <Globe className="h-5 w-5 text-gray-400 mr-2" />
                   <a 
                     href={restaurant.website}
                     target="_blank"
@@ -444,18 +377,7 @@ const RestaurantDetail = () => {
                 <div className="mb-4 rounded-md bg-red-50 p-4">
                   <div className="flex">
                     <div className="flex-shrink-0">
-                      <svg
-                        className="h-5 w-5 text-red-400"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
+                      <XCircle className="h-5 w-5 text-red-400" />
                     </div>
                     <div className="ml-3">
                       <h3 className="text-sm font-medium text-red-800">{reviewError}</h3>
@@ -477,13 +399,11 @@ const RestaurantDetail = () => {
                         onClick={() => setReviewData(prev => ({ ...prev, rating: star }))}
                         className="focus:outline-none"
                       >
-                        <svg 
-                          className={`h-8 w-8 ${star <= reviewData.rating ? 'text-yellow-500' : 'text-gray-300'} cursor-pointer hover:text-yellow-500`} 
-                          fill="currentColor" 
-                          viewBox="0 0 20 20"
-                        >
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
+                        <Star 
+                          className={`h-8 w-8 ${star <= reviewData.rating ? 'text-yellow-500' : 'text-gray-300'} cursor-pointer hover:text-yellow-500`}
+                          fill={star <= reviewData.rating ? '#f59e42' : 'none'}
+                          strokeWidth={star <= reviewData.rating ? 0 : 2}
+                        />
                       </button>
                     ))}
                     <span className="ml-2 text-gray-600">{reviewData.rating} out of 5 stars</span>
@@ -536,18 +456,7 @@ const RestaurantDetail = () => {
               <div className="mb-4 rounded-md bg-green-50 p-4">
                 <div className="flex">
                   <div className="flex-shrink-0">
-                    <svg
-                      className="h-5 w-5 text-green-400"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
+                    <CheckCircle className="h-5 w-5 text-green-400" />
                   </div>
                   <div className="ml-3">
                     <h3 className="text-sm font-medium text-green-800">

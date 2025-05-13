@@ -313,7 +313,7 @@ const RestaurantDetail = () => {
                     <button
                       key={slot.time}
                       onClick={() => handleSelectTime(slot.time)}
-                      className="bg-white border border-red-600 text-red-600 hover:bg-red-600 hover:text-white font-medium py-2 rounded-md transition duration-300"
+                      className="btn-secondary py-2 text-center"
                     >
                       {new Date(`1970-01-01T${slot.time}`).toLocaleTimeString([], {
                         hour: '2-digit',

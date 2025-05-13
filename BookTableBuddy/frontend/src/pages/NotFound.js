@@ -1,11 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { AlertTriangle } from 'lucide-react';
 
 const NotFound = () => {
   return (
     <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10 text-center">
+          <AlertTriangle className="mx-auto h-16 w-16 text-red-500 mb-4" />
           <h1 className="text-9xl font-bold text-red-600">404</h1>
           <h2 className="text-2xl font-bold text-gray-900 mt-4">Page Not Found</h2>
           <p className="mt-2 text-sm text-gray-600">
